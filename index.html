@@ -251,6 +251,22 @@
       border: 1px solid rgba(13,122,138,0.45); border-radius: 9px;
       padding: 8px 13px; font-size: 12px; font-weight: 700; cursor: pointer;
     }
+    /* ── 3-EMAIL TAB BUTTONS ── */
+    .email-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+    .email-tab {
+      flex: 1; padding: 8px 6px; font-size: 12px; font-weight: 600;
+      border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);
+      background: var(--card); color: var(--muted); cursor: pointer;
+      text-align: center; transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .email-tab.active {
+      background: var(--teal-dim); color: var(--teal-l);
+      border-color: rgba(13,122,138,0.5);
+    }
+    .email-tab-hint {
+      font-size: 11.5px; color: var(--muted); margin-bottom: 8px;
+      line-height: 1.5; font-style: italic;
+    }
 
     /* ── PROFILE INFO CARD (on every broker screen) ── */
     .info-card {
@@ -521,13 +537,17 @@
 
     <!-- Code entry -->
     <div>
-      <label style="display:block; color:var(--dim); font-size:11px; font-weight:700; margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em;">Enter Your Access Code</label>
-      <div style="display:flex; gap:8px;">
-        <input id="pw-code-inp" class="form-input" type="text" placeholder="e.g. LAUNCH50" autocomplete="off" autocapitalize="characters" style="flex:1; text-transform:uppercase; letter-spacing:.08em; font-weight:600;" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter'){redeemCode();event.preventDefault();}">
-        <button class="btn btn-primary" onclick="redeemCode()" style="white-space:nowrap; padding:0 18px; margin:0;">Unlock →</button>
+      <label style="display:block; color:var(--dim); font-size:11px; font-weight:700; margin-bottom:4px; text-transform:uppercase; letter-spacing:.06em;">Enter Your Access Code</label>
+      <p style="color:var(--muted); font-size:11px; margin:0 0 10px; line-height:1.6;">Your code is <strong style="color:var(--white);">PRIVACY2026</strong> — look for it in your Gumroad receipt email. Not seeing it? Check your spam folder first.</p>
+      <div style="display:flex; gap:8px; align-items:stretch;">
+        <div style="position:relative; flex:1;">
+          <input id="pw-code-inp" class="form-input" type="password" placeholder="Enter your access code" autocomplete="off" autocapitalize="characters" style="width:100%; text-transform:uppercase; letter-spacing:.1em; font-weight:700; padding-right:42px; box-sizing:border-box;" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter'){redeemCode();event.preventDefault();}">
+          <button type="button" id="pw-eye" onclick="(function(){var i=document.getElementById('pw-code-inp'),b=document.getElementById('pw-eye');i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'👁':'🙈';i.focus();})()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;padding:0;line-height:1;" title="Show / hide code">👁</button>
+        </div>
+        <button class="btn btn-primary" onclick="redeemCode()" style="white-space:nowrap; padding:0 18px; margin:0; flex-shrink:0;">Unlock →</button>
       </div>
-      <div id="pw-code-err" style="display:none; color:#F87171; font-size:12px; margin-top:8px;"></div>
-      <p style="color:var(--muted); font-size:11px; margin-top:10px; line-height:1.5;">First time? Enter the code from your Gumroad receipt. Returning? Enter your personal profile code (starts with <strong style="color:var(--dim);">PG-</strong>).</p>
+      <div id="pw-code-err" style="display:none; color:#F87171; font-size:12px; margin-top:8px; background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.3); border-radius:8px; padding:8px 12px;"></div>
+      <p style="color:var(--muted); font-size:11px; margin-top:10px; line-height:1.5;">Still can't find your code? <a href="mailto:support.privacyguide@gmail.com" style="color:var(--teal-l);text-decoration:none;">Email support</a> with the email address you used to purchase and we'll resend it right away.</p>
     </div>
   </div>
 </div>
@@ -784,7 +804,8 @@
     <div class="irow"><span class="ikey">Not Started</span><span class="ival" id="si-todo">0</span></div>
   </div>
 
-  <button class="btn btn-outline" onclick="go('disclaimer')" style="margin-top:4px;">📄 Read Terms of Service</button>
+  <button class="btn btn-outline" onclick="logoutUser()" style="margin-top:4px;">🔒 Log Out of This Device</button>
+  <button class="btn btn-outline" onclick="go('disclaimer')" style="margin-top:8px;">📄 Read Terms of Service</button>
   <button class="btn btn-danger" onclick="confirmReset()" style="margin-top:10px;">Reset All Progress</button>
 
   <!-- Hidden owner unlock — type CHERRYSUNDAE and press Enter -->
@@ -958,6 +979,41 @@
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">How will I know if it actually worked?<span class="faq-arrow">›</span></div>
       <div class="faq-a">After marking a broker as Done, wait 48–72 hours and then search your name directly on that site. If your listing is gone, it worked. For email-based removals, you'll usually receive a confirmation email — keep those as proof. If anything reappears, the process is the same: opt out again.</div>
+    </div>
+  </div>
+
+  <!-- GROUP 7 -->
+  <div class="faq-group">
+    <div class="faq-group-lbl">🎟️ Your Access Codes</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the PRIVACY2026 code?<span class="faq-arrow">›</span></div>
+      <div class="faq-a"><strong style="color:var(--white);">PRIVACY2026</strong> is your <strong>purchase unlock code</strong>. It comes in your Gumroad receipt email and is the same code for every buyer — think of it like an activation key. You enter it once when you first open PrivacyGuide to prove you've purchased access. After that, the app stays unlocked on this device and you don't need to enter it again unless you clear your browser data or switch to a new device.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is my PG-XXXX-XXXX personal code?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Your <strong style="color:var(--white);">PG-XXXX-XXXX</strong> code (like <strong>PG-A1B2-C3D4</strong>) is your <strong>personal profile ID</strong> — it's generated uniquely for you the first time you set up PrivacyGuide. It's not a password and it doesn't unlock the app on its own. It's simply your personal identifier stored only on this device.<br><br>You can email your PG code to yourself as a backup reference (tap <em>Settings → Email My Code</em>). It's useful if you ever want to note which device has your progress saved.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What's the difference between PRIVACY2026 and my PG code?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">They do two completely different things:<br><br><strong style="color:var(--white);">PRIVACY2026</strong> = the universal purchase key. Same for every buyer. You enter it to unlock the app. It's in your receipt.<br><br><strong style="color:var(--white);">PG-XXXX-XXXX</strong> = your personal device ID. Unique to you. Auto-generated when you set up. Lives only on this device.<br><br>Think of it this way: PRIVACY2026 is the key to the front door. Your PG code is your name tag once you're inside.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is this a one-time purchase for one person?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Yes — <strong>one purchase is for one person's data removal</strong>. The code unlocks access for your data: your name, your addresses, your opt-out requests.<br><br>You can use the same code on multiple of your own devices (each device stores its own copy of your data). But please don't share the code with a friend to remove a different person's data — each person should purchase their own copy. This keeps PrivacyGuide sustainable so we can keep updating it.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can I use PrivacyGuide on multiple of my own devices?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Yes — your purchase works on any of your own devices. On each new device, enter <strong>PRIVACY2026</strong> to unlock, then complete setup again (your name and address). Each device stores its own progress independently since everything is kept locally and not synced to a server.<br><br><strong style="color:var(--white);">Tip:</strong> Your broker progress doesn't carry over between devices, so most people pick one primary device (usually their phone) and do all their tracking there.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">I can't find my code — what do I do?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">First, check your email inbox for a receipt from <strong>Gumroad</strong> — the subject will mention "PrivacyGuide." Then check your <strong>spam or junk folder</strong> if you don't see it in your inbox.<br><br>Still can't find it? Email us at <a href="mailto:support.privacyguide@gmail.com" style="color:var(--teal-l);">support.privacyguide@gmail.com</a> with the email address you used to purchase and we'll resend your code right away.</div>
     </div>
   </div>
 
@@ -2678,7 +2734,7 @@ function openBroker(id) {
     </div>
   `).join('');
 
-  // Email template
+  // Email templates (Initial + Follow-Up + Closure)
   if (b.useEmail) {
     const full = [U.fn, U.mn, U.ln].filter(Boolean).join(' ') || '[Your Full Name]';
     const addrs = (U.addresses || []).filter(a => a.city || a.st);
@@ -2688,7 +2744,8 @@ function openBroker(id) {
     const aliases = U.aliases.length ? U.aliases.join(', ') : 'None / N/A';
     const emails = (U.emails || []);
     const emailLine = emails.length ? `  • Email(s): ${emails.join(', ')}` : '';
-    const tmpl = `Subject: Formal Data Deletion & Opt-Out Request
+
+    const initialTmpl = `Subject: Formal Data Deletion & Opt-Out Request
 
 To Whom It May Concern,
 
@@ -2718,27 +2775,73 @@ Please confirm removal in writing at your earliest convenience.
 Sincerely,
 ${full}`;
 
+    const followupTmpl = `Subject: Follow-Up: Data Deletion Request — Please Respond
+
+To Whom It May Concern,
+
+I am following up on a data deletion and opt-out request I submitted approximately 10 business days ago. I have not yet received a confirmation of removal.
+
+I am reaffirming my rights under applicable state privacy laws, including the CCPA/CPRA, TDPSA, VCDPA, CPA, and all other applicable laws, and I am formally requesting the status of this removal.
+
+Please remove all listings associated with:
+  • Full Name: ${full}
+  • Also Known As: ${aliases}
+  • Address(es): ${addr}${emailLine ? '\n' + emailLine : ''}
+
+I request a written confirmation of removal within 5 business days of this message. Please note: failure to respond or comply may result in a formal complaint filed with the applicable state Attorney General's office — a step I am prepared to take.
+
+Sincerely,
+${full}`;
+
+    const closureTmpl = `Subject: Data Removal Confirmed — Please Keep My Data Excluded
+
+To Whom It May Concern,
+
+Thank you for processing my data removal request. I have verified that my personal information is no longer listed in your database.
+
+This message serves as a formal record of my completed opt-out. I am requesting that the following information remain permanently excluded from all future database updates and not be re-shared with any downstream partners, affiliates, or third-party licensees:
+
+  • Full Name: ${full}
+  • Also Known As: ${aliases}
+  • Address(es): ${addr}${emailLine ? '\n' + emailLine : ''}
+
+I will be checking back periodically to confirm my data has not been re-added. I appreciate your cooperation and compliance.
+
+Sincerely,
+${full}`;
+
+    window._emailTemplates = { initial: initialTmpl, followup: followupTmpl, closure: closureTmpl };
+    window._emailAddr = b.email;
+
     const isMissingInfo = full === '[Your Full Name]' || addr === '[Your Address]';
     document.getElementById('d-email-wrap').innerHTML = `
-      <div class="sec-label">Email Template</div>
+      <div class="sec-label">📧 Email Templates</div>
       ${isMissingInfo ? `
       <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:10px 13px;margin-bottom:10px;font-size:12px;color:#F59E0B;line-height:1.5;">
-        ⚠️ Some fields show placeholders because your profile isn't complete. Go to <strong>Settings → Edit Profile</strong> to add your info — it will auto-fill here.
+        ⚠️ Some fields show placeholders because your profile isn't complete. Go to <strong>Settings → Edit My Info</strong> to add your name and address — they will auto-fill here.
       </div>` : `
       <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:10px;padding:10px 13px;margin-bottom:10px;font-size:12px;color:#22C55E;line-height:1.5;">
-        ✅ Your name and address have been pre-filled from your profile. Just copy and send — no editing needed.
+        ✅ Your name and address are pre-filled. Copy the email below and send it — no editing needed.
       </div>`}
+      <div class="email-tabs">
+        <button class="email-tab active" onclick="showEmailType('initial',this)">📨 Initial</button>
+        <button class="email-tab" onclick="showEmailType('followup',this)">📬 Follow-Up</button>
+        <button class="email-tab" onclick="showEmailType('closure',this)">✅ Closure</button>
+      </div>
+      <p class="email-tab-hint" id="email-tab-hint">Send this first — your initial opt-out request to the broker.</p>
       <div class="ebox">
         <div class="email-to-row">Send to: <span>${b.email}</span></div>
-        <div class="etext" id="etxt">${tmpl}</div>
+        <div class="etext" id="etxt">${initialTmpl}</div>
         <div class="copy-row">
-          <button class="copy-btn" onclick="copyEmail('${b.email}')">📋 Copy Email</button>
-          <button class="copy-btn" onclick="copyAddress('${b.email}')">@ Copy Address</button>
+          <button class="copy-btn" onclick="copyEmail(window._emailAddr)">📋 Copy Email Text</button>
+          <button class="copy-btn" onclick="copyAddress(window._emailAddr)">@ Copy Address</button>
         </div>
       </div>
     `;
   } else {
     document.getElementById('d-email-wrap').innerHTML = '';
+    window._emailTemplates = null;
+    window._emailAddr = null;
   }
 
   // Status selector
@@ -2791,6 +2894,30 @@ function copyEmail(emailAddr) {
 
 function copyAddress(emailAddr) {
   navigator.clipboard.writeText(emailAddr).then(() => toast('Email address copied! 📋'));
+}
+
+// ── 3-EMAIL TAB SWITCHER ──────────────────────────────────
+function showEmailType(type, btn) {
+  const t = window._emailTemplates;
+  if (!t) return;
+  document.querySelectorAll('.email-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const hints = {
+    initial:  '📨 Send this first — your initial opt-out request to the broker.',
+    followup: '📬 No response after 10 business days? Send this follow-up to push for action.',
+    closure:  '✅ Once the broker confirms removal or you verify it\'s done, send this as your formal record.'
+  };
+  const hintEl = document.getElementById('email-tab-hint');
+  if (hintEl) hintEl.textContent = hints[type] || '';
+  const etxt = document.getElementById('etxt');
+  if (etxt) etxt.textContent = t[type] || '';
+}
+
+// ── LOGOUT ───────────────────────────────────────────────
+function logoutUser() {
+  if (!confirm('Lock this device?\n\nYou\'ll return to the code entry screen. Your data stays saved here — just re-enter your access code to get right back in.')) return;
+  localStorage.removeItem('pg_access');
+  go('paywall');
 }
 
 // ═══════════════════════════════════════════════════════════
