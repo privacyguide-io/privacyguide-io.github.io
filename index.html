@@ -75,6 +75,8 @@
     .btn-outline { background: transparent; color: var(--teal-l); border: 1.5px solid var(--teal); margin-top: 10px; }
     .btn-ghost { background: transparent; color: var(--dim); border: none; font-size: 14px; padding: 12px; }
     .btn-sm { padding: 10px 16px; border-radius: 10px; font-size: 13px; width: auto; display: inline-block; }
+    /* Use btn-auto when .btn sits inside a flex row — prevents width:100% collapsing siblings */
+    .btn-auto { width: auto !important; flex-shrink: 0; }
     .btn-danger { background: rgba(239,68,68,0.12); color: var(--danger); border: 1.5px solid rgba(239,68,68,0.3); }
 
     /* ── SETUP ───────────────────────────────────────── */
@@ -603,7 +605,7 @@
           <input id="pw-code-inp" class="form-input" type="password" placeholder="Enter your license key" autocomplete="off" autocapitalize="characters" style="width:100%; text-transform:uppercase; letter-spacing:.1em; font-weight:700; padding-right:42px; box-sizing:border-box; -webkit-text-fill-color:var(--white); caret-color:var(--white);" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key==='Enter'){redeemCode();event.preventDefault();}">
           <button type="button" id="pw-eye" onclick="(function(){var i=document.getElementById('pw-code-inp'),b=document.getElementById('pw-eye');i.type=i.type==='text'?'password':'text';b.textContent=i.type==='text'?'🙈':'👁';i.focus();})()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;padding:0;line-height:1;" title="Show / hide code">👁</button>
         </div>
-        <button class="btn btn-primary" onclick="redeemCode()" style="white-space:nowrap; padding:0 18px; margin:0; flex-shrink:0; width:auto;">Unlock →</button>
+        <button class="btn btn-primary btn-auto" onclick="redeemCode()" style="white-space:nowrap; padding:0 18px; margin:0;">Unlock →</button>
       </div>
       <div id="pw-code-err" style="display:none; color:#F87171; font-size:12px; margin-top:8px; background:rgba(248,113,113,0.08); border:1px solid rgba(248,113,113,0.3); border-radius:8px; padding:8px 12px;"></div>
       <p style="color:var(--muted); font-size:11px; margin-top:10px; line-height:1.5;">Still can't find your code? <a href="mailto:support.privacyguide@gmail.com" style="color:var(--teal-l);text-decoration:none;">Email support</a> with the email address you used to purchase. I typically respond within 1–2 business days.</p>
@@ -2396,16 +2398,30 @@ async function _verifyGumroadLicense(key) {
   const btn   = document.querySelector('[onclick="redeemCode()"]');
   if (btn) { btn.disabled = true; btn.textContent = 'Verifying…'; }
 
+  // Abort after 10 seconds so the button doesn't stay stuck forever
+  const controller = new AbortController();
+  const timeoutId  = setTimeout(() => controller.abort(), 10000);
+
   try {
     const resp = await fetch('https://api.gumroad.com/v2/licenses/verify', {
       method : 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body   : 'product_id=' + encodeURIComponent('kmChYk49RVu58Zp7vdXF_A==')
              + '&license_key=' + encodeURIComponent(key)
-             + '&increment_uses_count=false'
+             + '&increment_uses_count=false',
+      signal : controller.signal
     });
-    const data = await resp.json();
+    clearTimeout(timeoutId);
     if (btn) { btn.disabled = false; btn.textContent = 'Unlock →'; }
+
+    // Handle non-200 HTTP responses (Gumroad outage / rate-limit)
+    if (!resp.ok) {
+      errEl.textContent   = 'Gumroad is temporarily unavailable (error ' + resp.status + '). Please try again in a moment.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    const data = await resp.json();
 
     if (data.success) {
       localStorage.setItem('pg_license', key);  // remember their key for reference
@@ -2420,8 +2436,13 @@ async function _verifyGumroadLicense(key) {
       errEl.style.display = 'block';
     }
   } catch (e) {
+    clearTimeout(timeoutId);
     if (btn) { btn.disabled = false; btn.textContent = 'Unlock →'; }
-    errEl.textContent   = 'Connection error — check your internet and try again.';
+    if (e.name === 'AbortError') {
+      errEl.textContent = 'Request timed out — Gumroad is slow right now. Try again in a moment.';
+    } else {
+      errEl.textContent = 'Connection error — check your internet and try again.';
+    }
     errEl.style.display = 'block';
   }
 }
