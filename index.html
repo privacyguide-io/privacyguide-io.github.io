@@ -577,7 +577,7 @@
       </div>
       <div style="display:flex; align-items:flex-start; gap:9px; margin-bottom:8px;">
         <span style="font-size:14px; flex-shrink:0;">↩</span>
-        <span style="font-size:12px; color:var(--dim); line-height:1.5;"><strong style="color:var(--white);">4-day refund window</strong> — if the app isn't loading, the license key isn't working, or there's a technical issue, email me and I'll fix it or refund you. Doesn't cover cases where brokers take longer than expected — that's their timeline, not mine.</span>
+        <span style="font-size:12px; color:var(--dim); line-height:1.5;"><strong style="color:var(--white);">4-day refund window</strong> — if the app isn't loading, the license key isn't working, or there's a technical issue, email me and I'll fix it or refund you. Removal timelines vary by broker (typically 3–30 days) — delays on their end aren't covered by this policy.</span>
       </div>
       <div style="display:flex; align-items:flex-start; gap:9px; margin-bottom:8px;">
         <span style="font-size:14px; flex-shrink:0;">⏱️</span>
@@ -1364,7 +1364,7 @@
         <div class="irow"><span class="ikey" style="font-size:12px;">Language</span><span class="ival" style="font-size:12px;">Pure HTML + CSS + JavaScript (ES6+)</span></div>
         <div class="irow"><span class="ikey" style="font-size:12px;">Framework</span><span class="ival" style="font-size:12px;color:var(--muted);">None — zero dependencies</span></div>
         <div class="irow"><span class="ikey" style="font-size:12px;">Database / Server</span><span class="ival" style="font-size:12px;color:var(--muted);">None — everything lives in browser localStorage</span></div>
-        <div class="irow"><span class="ikey" style="font-size:12px;">Hosting</span><span class="ival" style="font-size:12px;">Netlify (free tier, drag-and-drop deploy)</span></div>
+        <div class="irow"><span class="ikey" style="font-size:12px;">Hosting</span><span class="ival" style="font-size:12px;">GitHub Pages (free, auto-deploys on every push to main)</span></div>
         <div class="irow"><span class="ikey" style="font-size:12px;">Payments</span><span class="ival" style="font-size:12px;">Gumroad (handles checkout, receipts, refunds)</span></div>
         <div class="irow"><span class="ikey" style="font-size:12px;">File count</span><span class="ival" style="font-size:12px;color:var(--white);font-weight:700;">ONE FILE — the entire app is a single .html file</span></div>
         <div class="irow"><span class="ikey" style="font-size:12px;">PWA</span><span class="ival" style="font-size:12px;">Yes — installable on mobile via browser "Add to Home Screen"</span></div>
@@ -1532,6 +1532,23 @@
       <div class="irow"><span class="ikey" style="font-size:12px;">Unlock in receipt</span><span class="ival" style="font-size:12px;color:var(--teal-l);font-weight:700;">Unique Gumroad License Key (auto-generated per purchase)</span></div>
       <p style="font-size:12px;color:var(--dim);line-height:1.65;margin-top:10px;">Gumroad handles everything: checkout, payment processing, receipt emails (with unique license key), refunds, dispute management. You receive payouts via Gumroad's payout schedule. To resend a receipt or issue a refund, go to Sales → find the customer → use the menu on their purchase.</p>
       <p style="font-size:12px;color:var(--dim);line-height:1.65;margin-top:6px;">The app validates license keys live via <code style="font-size:11px;background:rgba(255,255,255,0.07);padding:1px 4px;border-radius:3px;">api.gumroad.com/v2/licenses/verify</code> using product ID <strong style="color:var(--white);">kmChYk49RVu58Zp7vdXF_A==</strong>. The license key block was enabled in the Gumroad Content editor — each buyer's receipt auto-includes their unique key. PRIVACY2026 still works as a silent legacy code for existing buyers but is not shown to new buyers.</p>
+    </div>
+
+    <!-- ── SITE MAINTENANCE ── -->
+    <div class="scard" style="margin-bottom:14px;border-color:rgba(20,184,166,0.25);">
+      <div class="scardlbl" style="color:var(--teal-l);">🔄 Keeping the Site Current — "Last verified [Month Year]"</div>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.7;margin-bottom:10px;">The paywall shows <strong style="color:var(--white);">"Actively maintained — Last verified [Month Year]"</strong>. Update this whenever you do a content review pass.</p>
+
+      <p style="font-size:12px;font-weight:700;color:var(--white);margin-bottom:4px;">When to update it:</p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:4px;">• Every <strong style="color:var(--white);">1–3 months</strong> — spot-check 4–5 brokers to make sure their opt-out pages still match the steps</p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:4px;">• Whenever a <strong style="color:var(--white);">customer reports a step is wrong or a broker changed their flow</strong></p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:10px;">• Any time you add a broker, update a guide, or fix a URL</p>
+
+      <p style="font-size:12px;font-weight:700;color:var(--white);margin-bottom:4px;">How to update it:</p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:4px;"><strong style="color:var(--white);">1.</strong> Open <code style="font-size:11px;background:rgba(255,255,255,0.07);padding:1px 4px;border-radius:3px;">index.html</code> in a text editor (or GitHub's web editor)</p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:4px;"><strong style="color:var(--white);">2.</strong> Find <code style="font-size:11px;background:rgba(255,255,255,0.07);padding:1px 4px;border-radius:3px;">Last verified &lt;strong</code> — there are two instances (paywall + Terms of Service)</p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:4px;"><strong style="color:var(--white);">3.</strong> Replace the month and year in both places (e.g. "July 2026" → "October 2026")</p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:4px;"><strong style="color:var(--white);">4.</strong> Save and deploy — GitHub Pages rebuilds automatically in ~1–2 minutes</p>
     </div>
 
     <!-- DIVIDER -->
@@ -1727,7 +1744,18 @@ Let me know if you have any trouble!
       <div class="scardlbl" style="color:var(--warning);">⚠️ "I want a refund"</div>
       <p style="font-size:12.5px;color:var(--dim);line-height:1.7;margin-bottom:10px;">Per the Terms of Service (section 3 — Refunds):</p>
       <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:10px;">• All sales are final — the guide is delivered in full on unlock<br>• Refunds are not available based on broker compliance (brokers are third parties)<br>• <strong style="color:var(--white);">Exception:</strong> if something is broken on your end within 4 days of purchase, honor it. Issue the refund through Gumroad.</p>
-      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;">Use your judgment. A customer who genuinely tried and had a bad experience is worth a refund to protect your reputation. Someone asking after 3 weeks because "it was too much work" — that's not covered.</p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:14px;">Use your judgment. A customer who genuinely tried and had a bad experience is worth a refund to protect your reputation. Someone asking after 3 weeks because "it was too much work" — that's not covered.</p>
+
+      <p style="font-size:12px;font-weight:800;color:var(--white);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">How to Issue a Refund in Gumroad</p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:6px;"><strong style="color:var(--white);">1.</strong> Go to <a href="https://app.gumroad.com" target="_blank" style="color:var(--teal-l);text-decoration:none;">app.gumroad.com</a> and log in with <strong style="color:var(--white);">support.privacyguide@gmail.com</strong></p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:6px;"><strong style="color:var(--white);">2.</strong> Click <strong style="color:var(--white);">Sales</strong> in the left sidebar</p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:6px;"><strong style="color:var(--white);">3.</strong> Search for the customer's name or email address in the search bar</p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:6px;"><strong style="color:var(--white);">4.</strong> Click on their purchase to open the sale detail page</p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:6px;"><strong style="color:var(--white);">5.</strong> Click the <strong style="color:var(--white);">···</strong> menu (three dots) → select <strong style="color:var(--white);">Refund</strong></p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:6px;"><strong style="color:var(--white);">6.</strong> Choose <strong style="color:var(--white);">Full refund</strong> → confirm. Gumroad emails the customer automatically.</p>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:14px;"><strong style="color:var(--white);">7.</strong> Send the customer the "Approved" email below so they hear from you personally — Gumroad's auto-email is generic.</p>
+      <p style="font-size:11.5px;color:var(--muted);line-height:1.6;margin-bottom:14px;">💡 Refunds take 5–10 business days to appear on the customer's card. Their license key is automatically disabled once refunded.</p>
+
       <div class="email-tpl-wrap">
         <div class="email-tpl-toggle" onclick="toggleEmailTpl(this)">
           <span>📧 Copy-paste response — Approved</span><span class="tpl-arrow">›</span>
