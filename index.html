@@ -3078,6 +3078,13 @@ function openBroker(id) {
   curBroker = BROKERS.find(b => b.id === id);
   if (!curBroker) return;
   const b = curBroker;
+  // Remember which screen launched the detail view so Back returns correctly
+  const _from = document.querySelector('.screen.active')?.id || 'dashboard';
+  const _backBtn = document.querySelector('#detail .back-btn');
+  if (_backBtn) {
+    _backBtn.textContent = _from === 'exposure-scan' ? '← Back to Scanner' : '← Back to Dashboard';
+    _backBtn.onclick = () => go(_from);
+  }
 
   document.getElementById('d-icon').textContent = b.icon;
   document.getElementById('d-name').textContent = b.name;
