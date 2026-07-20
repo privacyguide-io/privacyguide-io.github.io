@@ -872,7 +872,7 @@
   <!-- Hidden owner unlock — type CHERRYSUNDAE and press Enter -->
   <input id="owner-unlock-inp" type="password" autocomplete="off" autocorrect="off" spellcheck="false"
     style="opacity:0;position:absolute;width:1px;height:1px;pointer-events:none;"
-    onkeydown="if(event.key==='Enter'||event.keyCode===13){var v=this.value.toUpperCase().trim();if(v==='CHERRYSUNDAE'){localStorage.setItem('pg_owner','1');this.value='';var b=document.getElementById('owner-badge');if(!b){b=document.createElement('div');b.id='owner-badge';b.style.cssText='position:fixed;top:10px;right:10px;z-index:9999;background:rgba(168,85,247,0.9);color:#fff;font-size:10px;font-weight:800;padding:5px 10px;border-radius:20px;letter-spacing:0.5px;cursor:pointer;box-shadow:0 2px 10px rgba(168,85,247,0.4);';b.textContent='👑 Support Guide';b.onclick=function(){go('owner-guide');};document.body.appendChild(b);}go('owner-guide');}else{this.value='';}}" />
+    onkeydown="if(event.key==='Enter'||event.keyCode===13){var v=this.value.toUpperCase().trim();if(v==='CHERRYSUNDAE'){sessionStorage.setItem('pg_owner','1');this.value='';var b=document.getElementById('owner-badge');if(!b){b=document.createElement('div');b.id='owner-badge';b.style.cssText='position:fixed;top:10px;right:10px;z-index:9999;background:rgba(168,85,247,0.9);color:#fff;font-size:10px;font-weight:800;padding:5px 10px;border-radius:20px;letter-spacing:0.5px;cursor:pointer;box-shadow:0 2px 10px rgba(168,85,247,0.4);';b.textContent='👑 Support Guide';b.onclick=function(){go('owner-guide');};document.body.appendChild(b);}go('owner-guide');}else{this.value='';}}" />
   <div onclick="document.getElementById('owner-unlock-inp').style.cssText='opacity:0;position:absolute;width:1px;height:1px;pointer-events:none;';document.getElementById('owner-unlock-inp').focus();"
     style="height:18px;margin-top:8px;cursor:default;user-select:none;" aria-hidden="true"></div>
 
@@ -1414,7 +1414,7 @@
       <div class="irow"><span class="ikey" style="font-family:monospace;font-size:11.5px;">faq</span><span class="ival" style="font-size:12px;">Full FAQ — how brokers work, data reappearance, legal rights, timeline Q&amp;A.</span></div>
       <div class="irow"><span class="ikey" style="font-family:monospace;font-size:11.5px;">disclaimer</span><span class="ival" style="font-size:12px;">Terms of Service (11 sections). Accessible from welcome screen.</span></div>
       <div class="irow"><span class="ikey" style="font-family:monospace;font-size:11.5px;">dncr</span><span class="ival" style="font-size:12px;">Do Not Call Registry guide — links to donotcall.gov, explains how it works.</span></div>
-      <div class="irow"><span class="ikey" style="font-family:monospace;font-size:11.5px;">owner-guide</span><span class="ival" style="font-size:12px;">This screen — only visible when <code style="font-size:10.5px;background:rgba(255,255,255,0.07);padding:1px 4px;border-radius:3px;">pg_owner === '1'</code> in localStorage.</span></div>
+      <div class="irow"><span class="ikey" style="font-family:monospace;font-size:11.5px;">owner-guide</span><span class="ival" style="font-size:12px;">This screen — only visible when <code style="font-size:10.5px;background:rgba(255,255,255,0.07);padding:1px 4px;border-radius:3px;">pg_owner === '1'</code> in sessionStorage (resets when tab closes).</span></div>
     </div>
 
     <!-- ── KEY JAVASCRIPT FUNCTIONS ── -->
@@ -2490,7 +2490,7 @@ function clearAndContinueRedeem() {
 
 function _activateAccess(ownerValid, uidValid) {
   localStorage.setItem('pg_access', '1');
-  if (ownerValid) localStorage.setItem('pg_owner', '1');
+  if (ownerValid) sessionStorage.setItem('pg_owner', '1');
   const msg = uidValid
     ? '✅ Welcome back!'
     : ownerValid
@@ -2700,7 +2700,7 @@ function finishSetup() {
   BROKERS.forEach(b => { if (!S[b.id]) S[b.id] = 'todo'; });
   saveState();
   // Owner mode: skip code overlay entirely
-  if (localStorage.getItem('pg_owner')) {
+  if (sessionStorage.getItem('pg_owner')) {
     go('dashboard');
     return;
   }
@@ -3146,7 +3146,7 @@ function toast(msg) {
 (function init() {
   loadState();
   const hasPurchased = !!localStorage.getItem('pg_access');
-  const isOwner      = !!localStorage.getItem('pg_owner');
+  const isOwner      = !!sessionStorage.getItem('pg_owner');
   const hasAddress   = U.addresses && U.addresses.length > 0 && (U.addresses[0].city || U.addresses[0].st);
   if (hasPurchased && U.fn && hasAddress) {
     // Returning user who purchased and completed setup → dashboard
