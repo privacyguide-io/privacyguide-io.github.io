@@ -1180,7 +1180,18 @@
     <button class="back-btn" onclick="go('dashboard')" style="margin-bottom:16px;">← Back to Dashboard</button>
     <div style="font-size:36px;margin-bottom:10px;">📵</div>
     <div style="font-size:22px;font-weight:800;margin-bottom:6px;">Stop the Calls &amp; Texts</div>
-    <p style="font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:24px;">Your phone number lives on data broker sites — that's where telemarketers buy their lists. Here's how to fight back on all three fronts, step by step.</p>
+    <p style="font-size:13px;color:var(--dim);line-height:1.6;margin-bottom:20px;">Your phone number lives on data broker sites — that's where telemarketers buy their lists. Here's how to fight back on all three fronts, step by step.</p>
+
+    <!-- CHECK YOUR NUMBER FIRST -->
+    <div style="background:linear-gradient(135deg,rgba(13,122,138,0.18),rgba(13,122,138,0.06));border:1.5px solid rgba(13,122,138,0.4);border-radius:16px;padding:18px;margin-bottom:24px;">
+      <div style="font-size:10px;font-weight:800;color:var(--teal-l);text-transform:uppercase;letter-spacing:0.9px;margin-bottom:6px;">🔍 Check Your Number First</div>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.55;margin-bottom:14px;">Enter your number below to see if you're already registered on the Do Not Call list — before going through the steps.</p>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <input id="dnc-phone-inp" type="tel" placeholder="(555) 555-5555" class="form-input" style="flex:1;font-size:15px;font-weight:700;letter-spacing:0.02em;" oninput="fmtPhone(this)" maxlength="14">
+        <button onclick="checkDNC()" style="background:var(--teal);color:white;border:none;border-radius:12px;padding:13px 18px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;">Check →</button>
+      </div>
+      <div id="dnc-hint" style="display:none;margin-top:10px;background:rgba(13,122,138,0.12);border:1px solid rgba(13,122,138,0.3);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--teal-l);line-height:1.6;">📋 Number copied to clipboard! On the next page, tap the phone field and paste — then choose <strong>Register Here</strong> (new) or <strong>Verify Here</strong> (already registered).</div>
+    </div>
 
     <!-- STEP 1 -->
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
@@ -2667,6 +2678,23 @@ function _activateAccess(ownerValid, uidValid) {
 // ═══════════════════════════════════════════════════════════
 // FAQ ACCORDION
 // ═══════════════════════════════════════════════════════════
+// ── STOP THE CALLS — phone check helpers ───────────────────
+function fmtPhone(inp) {
+  let v = inp.value.replace(/\D/g,'').substring(0,10);
+  if (v.length > 6)      v = '(' + v.substring(0,3) + ') ' + v.substring(3,6) + '-' + v.substring(6);
+  else if (v.length > 3) v = '(' + v.substring(0,3) + ') ' + v.substring(3);
+  else if (v.length)     v = '(' + v;
+  inp.value = v;
+}
+function checkDNC() {
+  const raw = (document.getElementById('dnc-phone-inp').value || '').replace(/\D/g,'');
+  if (raw.length < 10) { toast('Please enter a 10-digit phone number'); return; }
+  const hint = document.getElementById('dnc-hint');
+  if (navigator.clipboard) navigator.clipboard.writeText(raw).catch(() => {});
+  hint.style.display = 'block';
+  window.open('https://www.donotcall.gov/verify.html', '_blank');
+}
+
 function toggleFaq(qEl) {
   const item = qEl.closest('.faq-item');
   const isOpen = item.classList.contains('open');
