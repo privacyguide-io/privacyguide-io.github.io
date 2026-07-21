@@ -3020,6 +3020,26 @@ function setFilter(f, el) {
 }
 
 // ═══════════════════════════════════════════════════════════
+// OPT-OUT URL — pre-filled where the form supports URL params
+// Only BeenVerified's opt-out search accepts ?firstName&lastName&state.
+// All other brokers need a profile URL pasted in, require login,
+// or use JS/POST forms with no URL param support.
+// ═══════════════════════════════════════════════════════════
+function getOptOutUrl(b) {
+  const fn = encodeURIComponent(U.fn || '');
+  const ln = encodeURIComponent(U.ln || '');
+  const st = encodeURIComponent((U.addresses?.[0]?.state || U.addresses?.[0]?.st || '').trim());
+  switch (b.id) {
+    case 'beenverified':
+      return fn && ln
+        ? `https://www.beenverified.com/app/optout/search?firstName=${fn}&lastName=${ln}${st ? '&state=' + st : ''}`
+        : b.url;
+    default:
+      return b.url || '#';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
 // EXPOSURE SCANNER — Find My Data
 // ═══════════════════════════════════════════════════════════
 function getExposureSearchUrl(b) {
@@ -3187,11 +3207,13 @@ function openBroker(id) {
     _stateNoteEl.innerHTML = '';
   }
 
-  // URL button
+  // URL button — use pre-filled URL where the form supports it
+  const _optUrl = getOptOutUrl(b);
+  const _isPrefilled = _optUrl !== b.url && _optUrl !== '#';
   document.getElementById('d-url-wrap').innerHTML = b.url ? `
     <div class="sec-label" style="margin-top:18px;">Opt-Out URL</div>
-    <a class="url-btn" href="${b.url}" target="_blank">
-      🔗 <span>Open Opt-Out Page</span>
+    <a class="url-btn" href="${_optUrl}" target="_blank">
+      🔗 <span>Open Opt-Out Page${_isPrefilled ? '&nbsp;<span style="font-size:10px;background:rgba(13,168,190,0.18);color:var(--teal-l);border-radius:5px;padding:2px 6px;font-weight:700;letter-spacing:0.3px;">✨ Pre-filled</span>' : ''}</span>
       <span style="margin-left:auto;font-size:11px;opacity:.6">↗</span>
     </a>
   ` : '';
