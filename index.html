@@ -900,8 +900,8 @@
     <div class="irow"><span class="ikey">Version</span><span class="ival" id="si-version" style="color:var(--teal-l);font-weight:700;"></span></div>
     <a href="https://privacyguide.gumroad.com/l/rbcccr" target="_blank" style="display:block;margin-top:10px;text-align:center;background:rgba(13,122,138,0.08);border:1px solid rgba(13,122,138,0.28);border-radius:10px;padding:10px;color:var(--teal-l);font-size:12px;font-weight:700;text-decoration:none;">🔄 Re-download latest version from Gumroad →</a>
     <div style="margin-top:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">
-      <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:7px;">What's New in v1.4</div>
-      <div style="font-size:11.5px;color:var(--dim);line-height:1.75;">✦ Post opt-out status prompt — mark progress right after visiting a site<br>✦ 🔴 Found filter — jump to sites that found your data after scanning<br>✦ BeenVerified opt-out URL pre-fills your name &amp; state automatically<br>✦ Filter tab label fixes + visual polish</div>
+      <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:7px;">What's New in v1.5</div>
+      <div style="font-size:11.5px;color:var(--dim);line-height:1.75;">✦ Scanner "Found Me" / "Not Here" now toggles off — tap again to undo<br>✦ "Open &amp; Check →" button replaces "Search [name]" — clearer expectations<br>✦ 100% completion confetti celebration + share message<br>✦ Milestone toasts at 25%, 50%, 75% progress<br>✦ "Tell a Friend" card on dashboard · Version info + changelog in Settings<br>✦ Welcome screen updated with social proof (2k+ protected) + trust signals</div>
     </div>
   </div>
 
@@ -2452,7 +2452,7 @@ const OWNER_CODE    = 'CHERRYSUNDAE';   // YOUR secret owner code — never shar
 const PRICE_REGULAR = '$7';
 const PRICE_LAUNCH  = '$3.50';
 const GUMROAD_URL   = 'https://privacyguide.gumroad.com/l/rbcccr';
-const APP_VERSION   = '1.4';
+const APP_VERSION   = '1.5';
 
 function isLaunchActive() {
   return Date.now() < LAUNCH_START + LAUNCH_HOURS * 3600000;
