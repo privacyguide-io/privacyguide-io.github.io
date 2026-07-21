@@ -899,8 +899,12 @@
     <div class="irow"><span class="ikey">Version</span><span class="ival" id="si-version" style="color:var(--teal-l);font-weight:700;"></span></div>
     <a href="https://privacyguide.gumroad.com/l/rbcccr" target="_blank" style="display:block;margin-top:10px;text-align:center;background:rgba(13,122,138,0.08);border:1px solid rgba(13,122,138,0.28);border-radius:10px;padding:10px;color:var(--teal-l);font-size:12px;font-weight:700;text-decoration:none;">🔄 Re-download latest version from Gumroad →</a>
     <div style="margin-top:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">
-      <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:7px;">What's New in v1.6</div>
-      <div style="font-size:11.5px;color:var(--dim);line-height:1.75;">✦ Removed false "Works offline" and "Updated monthly" claims from welcome screen<br>✦ Fixed all inaccurate trust labels — 100% private (not offline), no login required<br>✦ Paywall now correctly states 19-state privacy law coverage<br>✦ Owner Guide updated: 8 localStorage keys documented, exposure-scan screen added<br>✦ All "monthly re-check" language replaced with accurate, honest wording</div>
+      <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:7px;">What's New in v1.7</div>
+      <div style="font-size:11.5px;color:var(--dim);line-height:1.75;">✦ Exposure scanner buttons now show ✕ when active — tap again to unmark (clearer toggle UX)<br>✦ Gumroad listing accuracy: fixed "any device" claim, removed legal superlative, added support contact</div>
+      <div style="margin-top:8px;border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;">
+        <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:5px;">v1.6</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7;">✦ Removed false "Works offline" and "Updated monthly" claims · Fixed trust labels · Paywall 19-state coverage · Owner Guide updated · Honest wording throughout</div>
+      </div>
       <div style="margin-top:8px;border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;">
         <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:5px;">v1.5</div>
         <div style="font-size:11px;color:var(--muted);line-height:1.7;">✦ Scanner toggle off · Open &amp; Check → button · Confetti completion · Milestone toasts · Tell a Friend card · Version info in Settings</div>
@@ -2458,7 +2462,7 @@ const OWNER_CODE    = 'CHERRYSUNDAE';   // YOUR secret owner code — never shar
 const PRICE_REGULAR = '$7';
 const PRICE_LAUNCH  = '$3.50';
 const GUMROAD_URL   = 'https://privacyguide.gumroad.com/l/rbcccr';
-const APP_VERSION   = '1.6';
+const APP_VERSION   = '1.7';
 
 function isLaunchActive() {
   return Date.now() < LAUNCH_START + LAUNCH_HOURS * 3600000;
@@ -3219,8 +3223,8 @@ function renderExposureScan() {
         <a href="${url}" target="_blank" rel="noopener" style="font-size:11px;color:var(--teal-l);text-decoration:none;background:rgba(20,184,166,0.1);border:1px solid rgba(20,184,166,0.3);padding:6px 11px;border-radius:8px;white-space:nowrap;font-weight:700;">Open &amp; Check →</a>
       </div>
       <div style="display:flex;gap:6px;">
-        <button onclick="setExposure('${b.id}','found')" style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid ${iFound?'#f87171':'rgba(255,255,255,0.1)'};background:${iFound?'rgba(239,68,68,0.15)':'rgba(255,255,255,0.03)'};color:${iFound?'#f87171':'var(--muted)'};font-size:11.5px;font-weight:700;cursor:pointer;">🔴 Found Me</button>
-        <button onclick="setExposure('${b.id}','clear')" style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid ${isClear?'var(--teal-l)':'rgba(255,255,255,0.1)'};background:${isClear?'rgba(20,184,166,0.1)':'rgba(255,255,255,0.03)'};color:${isClear?'var(--teal-l)':'var(--muted)'};font-size:11.5px;font-weight:700;cursor:pointer;">✅ Not Here</button>
+        <button onclick="setExposure('${b.id}','found')" title="${iFound?'Tap to unmark':'Mark as found on this site'}" style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid ${iFound?'#f87171':'rgba(255,255,255,0.1)'};background:${iFound?'rgba(239,68,68,0.15)':'rgba(255,255,255,0.03)'};color:${iFound?'#f87171':'var(--muted)'};font-size:11.5px;font-weight:700;cursor:pointer;">${iFound?'🔴 Found ✕':'🔴 Found Me'}</button>
+        <button onclick="setExposure('${b.id}','clear')" title="${isClear?'Tap to unmark':'Mark as not found on this site'}" style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid ${isClear?'var(--teal-l)':'rgba(255,255,255,0.1)'};background:${isClear?'rgba(20,184,166,0.1)':'rgba(255,255,255,0.03)'};color:${isClear?'var(--teal-l)':'var(--muted)'};font-size:11.5px;font-weight:700;cursor:pointer;">${isClear?'✅ Not Here ✕':'✅ Not Here'}</button>
         ${iFound ? `<button onclick="openBroker('${b.id}')" style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid var(--teal-l);background:rgba(20,184,166,0.12);color:var(--teal-l);font-size:11.5px;font-weight:700;cursor:pointer;">Remove →</button>` : ''}
       </div>
     </div>`;
