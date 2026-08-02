@@ -620,11 +620,13 @@
     <a id="pw-buy-btn" href="https://privacyguide.gumroad.com/l/rbcccr" target="_blank" style="display:block; text-align:center; text-decoration:none; background:var(--teal); color:#fff; font-size:16px; font-weight:700; padding:14px 20px; border-radius:12px; margin-bottom:8px; letter-spacing:.01em;">🛒 Buy Now — $7</a>
     <p style="text-align:center; font-size:11.5px; color:var(--muted); margin-bottom:12px; line-height:1.5;">After purchase, <strong style="color:var(--dim);">come back to this page</strong> and enter your license key below to unlock. ↓</p>
 
-    <!-- DFY offer -->
+    <!-- Re-Check Club upsell (primary) + DFY (secondary) -->
     <div style="background:rgba(250,204,21,0.04); border:1px solid rgba(250,204,21,0.22); border-radius:12px; padding:14px 16px; margin-bottom:16px;">
-      <p style="color:#FACC15; font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.07em; margin:0 0 6px;">Rather skip the manual work?</p>
-      <p style="color:var(--dim); font-size:12.5px; line-height:1.6; margin:0 0 10px;">We'll submit all opt-out requests on your behalf as your <strong style="color:var(--white);">authorized agent under CCPA</strong>. You sign one short form, we handle all 21 brokers.</p>
-      <a href="mailto:support.privacyguide@gmail.com?subject=Done-For-You%20Service&body=Hi%2C%20I'm%20interested%20in%20the%20Done-For-You%20data%20removal%20service." style="display:block; text-align:center; text-decoration:none; background:rgba(250,204,21,0.1); border:1px solid rgba(250,204,21,0.28); color:#FACC15; font-size:13px; font-weight:700; padding:10px 16px; border-radius:10px; letter-spacing:.01em;">✋ Done-For-You — Email us to get started</a>
+      <p style="color:#FACC15; font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:.07em; margin:0 0 6px;">🔄 Want to stay protected after?</p>
+      <p style="color:var(--dim); font-size:12.5px; line-height:1.6; margin:0 0 10px;"><strong style="color:var(--white);">Re-Check Club — $29/year:</strong> brokers re-list your data every 6–12 months. We'll send you a bi-annual alert with exactly what to re-run. No subscription trap — cancel anytime.</p>
+      <a href="https://privacyguide.gumroad.com/l/recheck" target="_blank" style="display:block; text-align:center; text-decoration:none; background:rgba(250,204,21,0.12); border:1.5px solid rgba(250,204,21,0.3); color:#FACC15; font-size:13px; font-weight:700; padding:10px 16px; border-radius:10px; margin-bottom:8px;">🔄 Join Re-Check Club — $29/year</a>
+      <p style="color:var(--muted); font-size:11px; text-align:center; margin:0 0 6px;">or, want us to do it for you entirely?</p>
+      <a href="mailto:support.privacyguide@gmail.com?subject=Done-For-You%20Service&body=Hi%2C%20I'm%20interested%20in%20the%20Done-For-You%20data%20removal%20service." style="display:block; text-align:center; text-decoration:none; color:var(--dim); font-size:12px; font-weight:600;">✋ Done-For-You — email us →</a>
     </div>
 
     <div style="background:var(--card); border:1px solid var(--border); border-radius:12px; padding:13px 16px; margin-bottom:20px; text-align:left;">
@@ -863,6 +865,16 @@
     <button onclick="shareApp()" style="width:100%;background:rgba(20,184,166,0.1);border:1.5px solid rgba(20,184,166,0.32);color:var(--teal-l);border-radius:10px;padding:9px 14px;font-size:12.5px;font-weight:700;cursor:pointer;">🔗 Share PrivacyGuide →</button>
   </div>
 
+  <!-- Re-Check Club card (shown once all brokers are done) -->
+  <div id="recheck-club-card" style="display:none;margin:0 16px 12px;background:linear-gradient(135deg,rgba(250,204,21,0.07),rgba(250,204,21,0.02));border:1px solid rgba(250,204,21,0.22);border-radius:16px;padding:14px 16px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:7px;">
+      <span style="font-size:20px;">🔄</span>
+      <div style="font-size:13px;font-weight:800;color:var(--white);">Keep yourself protected</div>
+    </div>
+    <p style="font-size:12px;color:var(--dim);line-height:1.55;margin-bottom:10px;">Brokers re-list your data every 6–12 months. Re-Check Club sends you a bi-annual alert so you stay off for good — $29/year.</p>
+    <a href="https://privacyguide.gumroad.com/l/recheck" target="_blank" style="display:block;width:100%;background:rgba(250,204,21,0.1);border:1.5px solid rgba(250,204,21,0.28);color:#FACC15;border-radius:10px;padding:9px 14px;font-size:12.5px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;box-sizing:border-box;">🔄 Join Re-Check Club — $29/year</a>
+  </div>
+
   <!-- Stop the Calls bonus section -->
   <div onclick="go('stop-calls')" style="margin:0 16px 8px;background:linear-gradient(135deg,rgba(13,122,138,0.18),rgba(13,122,138,0.06));border:1px solid rgba(13,122,138,0.35);border-radius:16px;padding:16px 18px;cursor:pointer;display:flex;align-items:center;gap:14px;">
     <div style="font-size:32px;flex-shrink:0;">📵</div>
@@ -951,8 +963,12 @@
     <div class="irow"><span class="ikey">Version</span><span class="ival" id="si-version" style="color:var(--teal-l);font-weight:700;"></span></div>
     <a href="https://privacyguide.gumroad.com/l/rbcccr" target="_blank" style="display:block;margin-top:10px;text-align:center;background:rgba(13,122,138,0.08);border:1px solid rgba(13,122,138,0.28);border-radius:10px;padding:10px;color:var(--teal-l);font-size:12px;font-weight:700;text-decoration:none;">🔄 Re-download latest version from Gumroad →</a>
     <div style="margin-top:10px;padding:10px 12px;background:rgba(255,255,255,0.03);border-radius:8px;">
-      <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:7px;">What's New in v1.9</div>
-      <div style="font-size:11.5px;color:var(--dim);line-height:1.75;">✦ Added founder story — why this was built<br>✦ Added head-to-head comparison: PrivacyGuide vs DeleteMe vs EasyOptOuts<br>✦ Reframed 21 brokers to name the most dangerous ones (Spokeo, Whitepages, etc.)<br>✦ Clarified CCPA opt-out rights apply to all US residents, not just 19 states<br>✦ Added 6-month re-scan prompt to feature list<br>✦ Added Done-For-You service option</div>
+      <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:7px;">What's New in v1.10</div>
+      <div style="font-size:11.5px;color:var(--dim);line-height:1.75;">✦ Added Re-Check Club ($29/year) — bi-annual alerts to stay protected after brokers re-list your data<br>✦ Re-Check Club card appears in the completion modal and on the main screen after all 21 brokers are done<br>✦ Paywall updated: Re-Check Club as primary offer, Done-For-You as secondary</div>
+      <div style="margin-top:8px;border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;">
+        <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:5px;">v1.9</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.7;">✦ Founder note · Comparison table vs DeleteMe/EasyOptOuts · 21 brokers reframed · CCPA all-US clarification · 6-month re-scan prompt · DFY offer</div>
+      </div>
       <div style="margin-top:8px;border-top:1px solid rgba(255,255,255,0.06);padding-top:8px;">
         <div style="font-size:10px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:5px;">v1.8</div>
         <div style="font-size:11px;color:var(--muted);line-height:1.7;">✦ Removed fake "2k+ People Protected" stat and "Rated 5.0" claim · Fixed "actively maintained" and "strongest protection" wording · Added post-purchase instructions · Fixed filter tab clipping</div>
@@ -2106,6 +2122,12 @@ Just reply here with what you ran into and I'll do my best to help.
     <div style="font-size:60px;margin-bottom:10px;position:relative;">🎉</div>
     <h2 style="font-size:24px;font-weight:800;color:var(--white);margin-bottom:8px;position:relative;">You're Off the Grid!</h2>
     <p style="font-size:13.5px;color:var(--dim);line-height:1.7;margin-bottom:22px;position:relative;">You've submitted opt-outs to all 21 data brokers. Your personal information is on its way out. Set your 30-day reminder and check back — you've earned this. 🛡️</p>
+    <!-- Re-Check Club upsell — shown at moment of peak satisfaction -->
+    <div style="background:rgba(250,204,21,0.05);border:1.5px solid rgba(250,204,21,0.28);border-radius:14px;padding:14px;margin-bottom:14px;text-align:left;position:relative;">
+      <div style="font-size:10px;font-weight:800;color:#FACC15;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:7px;">🔄 Stay protected going forward</div>
+      <p style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:10px;">Brokers re-list your data every 6–12 months. <strong style="color:var(--white);">Re-Check Club</strong> sends you a bi-annual alert with exactly what to re-run — you've already done the hard part once.</p>
+      <a href="https://privacyguide.gumroad.com/l/recheck" target="_blank" style="display:block;width:100%;background:rgba(250,204,21,0.12);border:1.5px solid rgba(250,204,21,0.3);color:#FACC15;border-radius:8px;padding:9px;font-size:12.5px;font-weight:700;cursor:pointer;text-align:center;text-decoration:none;box-sizing:border-box;">🔄 Join Re-Check Club — $29/year</a>
+    </div>
     <div style="background:rgba(13,122,138,0.1);border:1px solid rgba(13,122,138,0.28);border-radius:14px;padding:14px;margin-bottom:16px;text-align:left;position:relative;">
       <div style="font-size:10px;font-weight:800;color:var(--teal-l);text-transform:uppercase;letter-spacing:0.7px;margin-bottom:7px;">📣 Tell a friend:</div>
       <p id="share-txt" style="font-size:12.5px;color:var(--dim);line-height:1.65;margin-bottom:10px;">I just removed myself from 21 data broker sites using PrivacyGuide 🛡️ Your info is probably out there too — get yours off: privacyguide-io.github.io</p>
@@ -2522,7 +2544,7 @@ const OWNER_CODE    = 'CHERRYSUNDAE';   // YOUR secret owner code — never shar
 const PRICE_REGULAR = '$7';
 const PRICE_LAUNCH  = '$3.50';
 const GUMROAD_URL   = 'https://privacyguide.gumroad.com/l/rbcccr';
-const APP_VERSION   = '1.9';
+const APP_VERSION   = '1.10';
 
 function isLaunchActive() {
   return Date.now() < LAUNCH_START + LAUNCH_HOURS * 3600000;
@@ -3114,6 +3136,10 @@ function renderDash() {
   // ── Show "Tell a Friend" card once any progress made ─────
   const friendCard = document.getElementById('tell-friend-card');
   if (friendCard) friendCard.style.display = done > 0 ? '' : 'none';
+
+  // ── Show "Re-Check Club" card once all brokers are done ──
+  const recheckCard = document.getElementById('recheck-club-card');
+  if (recheckCard) recheckCard.style.display = (done === total && total > 0) ? '' : 'none';
 
   renderBList();
 }
