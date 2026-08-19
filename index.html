@@ -2498,11 +2498,11 @@ const BROKERS = [
     url:'https://www.usphonebook.com/removal',
     desc:'US PhoneBook is a reverse phone and address lookup service primarily used by telemarketers. They use it to verify contact information before robocalling — removing yourself here directly helps reduce unwanted calls.',
     steps:[
-      {t:'Go to <a href="https://www.usphonebook.com/removal" target="_blank"><strong>usphonebook.com/removal</strong></a>'},
-      {t:'Enter your <strong>name and state</strong> in the search box'},
-      {t:'Select your record from the results — match by your address or phone number'},
-      {t:'Click <strong>"Remove"</strong> next to your listing and enter your email address when prompted'},
-      {t:'Check your inbox and click the <strong>verification link</strong> — removal completes within <strong>24–48 hours</strong>'},
+      {t:'Use the <strong>"Find Yourself First"</strong> button above to check if you appear on US PhoneBook. If you\'re listed, note the records for your own reference.'},
+      {t:'Go to <a href="https://www.usphonebook.com/removal" target="_blank"><strong>usphonebook.com/removal</strong></a> — fill in your <strong>first name, last name, and email address</strong>, then complete the CAPTCHA and click <strong>"Begin Removal Process."</strong>'},
+      {t:'Check your inbox for a <strong>verification email from US PhoneBook</strong> — click the link inside to open the removal form.'},
+      {t:'On the second form, your name and email are pre-filled. You\'ll also need to enter your <strong>city, state, and zip code</strong> (required). Adding your date of birth helps match all your records but is optional.'},
+      {t:'Check the <strong>certification checkbox</strong>, complete the CAPTCHA, and click <strong>"Confirm Removal Process."</strong> Your records will be removed within <strong>72 hours</strong>.'},
     ]
   },
   {
@@ -2558,7 +2558,7 @@ const OWNER_CODE    = 'CHERRYSUNDAE';   // YOUR secret owner code — never shar
 const PRICE_REGULAR = '$7';
 const PRICE_LAUNCH  = '$3.50';
 const GUMROAD_URL   = 'https://privacyguide.gumroad.com/l/rbcccr';
-const APP_VERSION   = '1.18';
+const APP_VERSION   = '1.19';
 
 function isLaunchActive() {
   return Date.now() < LAUNCH_START + LAUNCH_HOURS * 3600000;
