@@ -2326,9 +2326,9 @@ const BROKERS = [
     steps:[
       {t:'Go to <a href="https://radaris.com" target="_blank"><strong>radaris.com</strong></a> and search your <strong>full name + state</strong> (example: "Jane Smith Texas")'},
       {t:'Click your profile listing — it should show your address and relatives. This opens your full profile page.'},
-      {t:'<strong>Copy the full URL</strong> from your browser\'s address bar — it will look like: <code>radaris.com/p/Jane-Smith/1234567/</code>. You need this exact URL in your email.'},
-      {t:'If you have <strong>multiple listings</strong>, copy all of them — you can paste multiple URLs in the email and Radaris will remove all of them at once'},
-      {t:'Use the email template below — paste your profile URL(s) where indicated — and send to <strong>support@radaris.com</strong>'},
+      {t:'<strong>Copy the full URL</strong> from your browser\'s address bar — it will look like: <code>radaris.com/p/Jane/Smith/</code>. Save it for your records in case you need to follow up.'},
+      {t:'If you have <strong>multiple listings</strong>, note all of them — mention them in the email and Radaris will remove all of them at once'},
+      {t:'Use the email template below — your name and address are already pre-filled — and send to <strong>support@radaris.com</strong>'},
       {t:'Radaris removes listings within <strong>3–7 business days</strong> and emails you a confirmation. If you see no email after 7 days, check your spam folder.'},
     ],
     useEmail:true
@@ -2338,7 +2338,7 @@ const BROKERS = [
     email:'privacy@mylife.com',
     desc:'MyLife assigns you a public "Reputation Score" based on your records and criminal history, and that score appears in Google search results when someone looks up your name. It\'s one of the most damaging sites to have a listing on.',
     steps:[
-      {t:'Before emailing, go to <a href="https://www.mylife.com" target="_blank"><strong>mylife.com</strong></a> and search your name — note the exact URL of your profile page (you\'ll paste it in the email)'},
+      {t:'Use the <strong>"Find Yourself First"</strong> button above to check if you appear on MyLife. If you find your profile, note the URL for your records.'},
       {t:'Use the email template below — it already includes your <strong>full name, address, and name variations</strong>. Review the "Also Known As" line and add any other names or maiden names you\'ve used.'},
       {t:'The template cites your <strong>CCPA rights</strong> and demands removal within the legal 45-day window — do not edit or remove this language'},
       {t:'Send the email to <strong>privacy@mylife.com</strong>. You\'ll receive an auto-reply with a <strong>case number</strong> — save it.'},
@@ -2558,7 +2558,7 @@ const OWNER_CODE    = 'CHERRYSUNDAE';   // YOUR secret owner code — never shar
 const PRICE_REGULAR = '$7';
 const PRICE_LAUNCH  = '$3.50';
 const GUMROAD_URL   = 'https://privacyguide.gumroad.com/l/rbcccr';
-const APP_VERSION   = '1.15';
+const APP_VERSION   = '1.16';
 
 function isLaunchActive() {
   return Date.now() < LAUNCH_START + LAUNCH_HOURS * 3600000;
@@ -3254,13 +3254,13 @@ function getExposureSearchUrl(b) {
     case 'fastpeoplesearch':return `https://www.fastpeoplesearch.com/name/${slug(fnRaw)}-${slug(lnRaw)}_${slug(cityRaw)}-${stRaw.toLowerCase()}`;
     // Fixed: use /p/FirstName/LastName/ path format instead of broken ?q=
     case 'radaris':         return `https://radaris.com/p/${fnRaw}/${lnRaw.replace(/\s+/g, '-')}/`;
-    case 'mylife':          return `https://www.mylife.com/people-search/name_results.pubview?searchterm=${fn}+${ln}`;
+    case 'mylife':          return `https://www.mylife.com/pub-multisearch.pubview?search=${plus(fnRaw)}+${plus(lnRaw)}&searchFirstName=${plus(fnRaw)}&searchLastName=${plus(lnRaw)}&searchLocation=`;
     case 'truthfinder':     return `https://www.truthfinder.com/people-search/?firstName=${fn}&lastName=${ln}&state=${st}`;
     // Suppression portal only — no name-search available
     case 'instantcheckmate':return null;
     // Fixed: all-lowercase slug for path URLs
     case 'peoplefinders':   return `https://www.peoplefinders.com/people/${slug(fnRaw)}-${slug(lnRaw)}`;
-    case 'socialcatfish':   return `https://socialcatfish.com/search/?q=${fn}+${ln}`;
+    case 'socialcatfish':   return `https://socialcatfish.com/search/?q=${plus(fnRaw)}+${plus(lnRaw)}`;
     // Fixed: use encodeURIComponent instead of raw strings in query params
     case 'checkpeople':     return `https://checkpeople.com/search?firstName=${fn}&lastName=${ln}`;
     case 'familytreenow':   return `https://www.familytreenow.com/search/people/results?first=${fn}&last=${ln}&state=${st}`;
@@ -3275,7 +3275,7 @@ function getExposureSearchUrl(b) {
     case 'anywho':          return null;
     // Fixed: all-lowercase slug
     case 'usphonebook':     return `https://www.usphonebook.com/${slug(fnRaw)}-${slug(lnRaw)}/`;
-    case 'publicrecords360':return `https://www.publicrecords360.com/search/${fn}+${ln}`;
+    case 'publicrecords360':return `https://www.publicrecords360.com/search/${plus(fnRaw)}+${plus(lnRaw)}`;
     // No searchable profile page
     case 'unmask':          return null;
     default:                return b.url || '#';
@@ -3482,7 +3482,7 @@ function openBroker(id) {
     const addr = addrs.length
       ? addrs.map(a => [a.st, a.city, a.state, a.zip].filter(Boolean).join(', ')).join('\n  • ')
       : '[Your Address]';
-    const aliases = U.aliases.length ? U.aliases.join(', ') : 'None / N/A';
+    const aliases = U.aliases.length ? U.aliases.join(', ') : 'N/A';
     const emails = (U.emails || []);
     const emailLine = emails.length ? `  • Email(s): ${emails.join(', ')}` : '';
 
