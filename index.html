@@ -2498,7 +2498,7 @@ const BROKERS = [
     url:'https://www.usphonebook.com/removal',
     desc:'US PhoneBook is a reverse phone and address lookup service primarily used by telemarketers. They use it to verify contact information before robocalling — removing yourself here directly helps reduce unwanted calls.',
     steps:[
-      {t:'Use the <strong>"Find Yourself First"</strong> button above to check if you appear on US PhoneBook. If you\'re listed, note the records for your own reference.'},
+      {t:'Use the <strong>"Find Yourself First"</strong> button above to search your name. Results may include <strong>other people with similar names</strong> — click into any result to verify the address or city matches yours before assuming you\'re listed.'},
       {t:'Go to <a href="https://www.usphonebook.com/removal" target="_blank"><strong>usphonebook.com/removal</strong></a> — fill in your <strong>first name, last name, and email address</strong>, then complete the CAPTCHA and click <strong>"Begin Removal Process."</strong>'},
       {t:'Check your inbox for a <strong>verification email from US PhoneBook</strong> — click the link inside to open the removal form.'},
       {t:'On the second form, your name and email are pre-filled. You\'ll also need to enter your <strong>city, state, and zip code</strong> (required). Adding your date of birth helps match all your records but is optional.'},
@@ -2510,8 +2510,8 @@ const BROKERS = [
     email:'optout@publicrecords360.com',
     desc:'PublicRecords360 sells access to court records, property records, and personal background data aggregated from government databases. It resells this information to individuals and businesses without your knowledge.',
     steps:[
-      {t:'First, visit <a href="https://www.publicrecords360.com" target="_blank"><strong>publicrecords360.com</strong></a> and search your name to find your listing — note your profile URL from the address bar'},
-      {t:'Use the email template below — your <strong>full name, address, and ZIP code are pre-filled</strong>. Add your profile URL to the message body for faster processing. Send to <strong>optout@publicrecords360.com</strong>.'},
+      {t:'PublicRecords360 now redirects to US Search and no longer has a working public search page. Use the email opt-out below — it still works and is the only removal method available.'},
+      {t:'Use the email template below — your <strong>full name, address, and ZIP code are pre-filled</strong>. Send to <strong>optout@publicrecords360.com</strong>.'},
       {t:'Include in the subject line: <strong>"CCPA Opt-Out Request – [Your Full Name]"</strong> — this routes it to their privacy team directly'},
       {t:'They process requests within <strong>7 business days</strong> and will send a confirmation email when your record is removed'},
       {t:'If no response within <strong>10 business days</strong>, send a follow-up email citing your original send date. The CCPA requires a response within 45 days.'},
@@ -2558,7 +2558,7 @@ const OWNER_CODE    = 'CHERRYSUNDAE';   // YOUR secret owner code — never shar
 const PRICE_REGULAR = '$7';
 const PRICE_LAUNCH  = '$3.50';
 const GUMROAD_URL   = 'https://privacyguide.gumroad.com/l/rbcccr';
-const APP_VERSION   = '1.19';
+const APP_VERSION   = '1.20';
 
 function isLaunchActive() {
   return Date.now() < LAUNCH_START + LAUNCH_HOURS * 3600000;
@@ -3275,7 +3275,7 @@ function getExposureSearchUrl(b) {
     case 'anywho':          return null;
     // Fixed: all-lowercase slug
     case 'usphonebook':     return `https://www.usphonebook.com/${slug(fnRaw)}-${slug(lnRaw)}/`;
-    case 'publicrecords360':return `https://www.publicrecords360.com/search/${plus(fnRaw)}+${plus(lnRaw)}`;
+    case 'publicrecords360':return null; // Now redirects to US Search — email opt-out only
     // No searchable profile page
     case 'unmask':          return null;
     default:                return b.url || '#';
