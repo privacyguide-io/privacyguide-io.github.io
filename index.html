@@ -2558,7 +2558,7 @@ const OWNER_CODE    = 'CHERRYSUNDAE';   // YOUR secret owner code — never shar
 const PRICE_REGULAR = '$7';
 const PRICE_LAUNCH  = '$3.50';
 const GUMROAD_URL   = 'https://privacyguide.gumroad.com/l/rbcccr';
-const APP_VERSION   = '1.17';
+const APP_VERSION   = '1.18';
 
 function isLaunchActive() {
   return Date.now() < LAUNCH_START + LAUNCH_HOURS * 3600000;
@@ -3482,7 +3482,7 @@ function openBroker(id) {
     const addr = addrs.length
       ? addrs.map(a => [a.st, a.city, a.state, a.zip].filter(Boolean).join(', ')).join('\n  • ')
       : '[Your Address]';
-    const aliases = U.aliases.length ? U.aliases.join(', ') : 'N/A';
+    const aliasLine = U.aliases.length ? `\n  • Also Known As: ${U.aliases.join(', ')}` : '';
     const emails = (U.emails || []);
     const emailLine = emails.length ? `  • Email(s): ${emails.join(', ')}` : '';
 
@@ -3505,8 +3505,7 @@ I am formally requesting the immediate removal of all records associated with my
   • And any other applicable privacy law in my state of residence
 
 Please remove all listings associated with:
-  • Full Name: ${full}
-  • Also Known As: ${aliases}
+  • Full Name: ${full}${aliasLine}
   • Address(es): ${addr}${emailLine ? '\n' + emailLine : ''}
 
 I am also requesting that my data not be re-added in future database updates and that it not be shared with downstream partners or affiliates.
@@ -3525,8 +3524,7 @@ I am following up on a data deletion and opt-out request I submitted approximate
 I am reaffirming my rights under applicable state privacy laws, including the CCPA/CPRA, TDPSA, VCDPA, CPA, and all other applicable laws, and I am formally requesting the status of this removal.
 
 Please remove all listings associated with:
-  • Full Name: ${full}
-  • Also Known As: ${aliases}
+  • Full Name: ${full}${aliasLine}
   • Address(es): ${addr}${emailLine ? '\n' + emailLine : ''}
 
 I request a written confirmation of removal within 5 business days of this message. Please note: failure to respond or comply may result in a formal complaint filed with the applicable state Attorney General's office — a step I am prepared to take.
@@ -3542,8 +3540,7 @@ Thank you for processing my data removal request. I have verified that my person
 
 This message serves as a formal record of my completed opt-out. I am requesting that the following information remain permanently excluded from all future database updates and not be re-shared with any downstream partners, affiliates, or third-party licensees:
 
-  • Full Name: ${full}
-  • Also Known As: ${aliases}
+  • Full Name: ${full}${aliasLine}
   • Address(es): ${addr}${emailLine ? '\n' + emailLine : ''}
 
 I will be checking back periodically to confirm my data has not been re-added. I appreciate your cooperation and compliance.
@@ -3575,6 +3572,7 @@ ${full}`;
         <div class="etext" id="etxt">${initialTmpl}</div>
         <div class="copy-row">
           <button class="copy-btn" onclick="copyEmail(window._emailAddr)">📋 Copy Email Text</button>
+          <button class="copy-btn" onclick="openInMail()">✉️ Open in Mail</button>
           <button class="copy-btn" onclick="copyAddress(window._emailAddr)">@ Copy Address</button>
         </div>
       </div>
@@ -3768,6 +3766,19 @@ function copyEmailTpl(btn) {
 function copyEmail(emailAddr) {
   const txt = document.getElementById('etxt').textContent;
   navigator.clipboard.writeText(txt).then(() => toast('Email body copied! 📋'));
+}
+
+function openInMail() {
+  const t = window._emailTemplates;
+  const addr = window._emailAddr;
+  if (!t || !addr) return;
+  const activeTab = document.querySelector('.email-tab.active');
+  const type = activeTab ? (activeTab.textContent.includes('Follow') ? 'followup' : activeTab.textContent.includes('Closure') ? 'closure' : 'initial') : 'initial';
+  const body = t[type] || t.initial;
+  const lines = body.split('\n');
+  const subject = lines[0].startsWith('Subject: ') ? lines[0].slice(9) : 'Data Deletion Request';
+  const bodyText = lines.slice(2).join('\n');
+  window.location.href = `mailto:${encodeURIComponent(addr)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
 }
 
 function copyAddress(emailAddr) {
