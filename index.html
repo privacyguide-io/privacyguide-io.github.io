@@ -2558,7 +2558,7 @@ const OWNER_CODE    = 'CHERRYSUNDAE';   // YOUR secret owner code — never shar
 const PRICE_REGULAR = '$7';
 const PRICE_LAUNCH  = '$3.50';
 const GUMROAD_URL   = 'https://privacyguide.gumroad.com/l/rbcccr';
-const APP_VERSION   = '1.16';
+const APP_VERSION   = '1.17';
 
 function isLaunchActive() {
   return Date.now() < LAUNCH_START + LAUNCH_HOURS * 3600000;
@@ -3265,12 +3265,12 @@ function getExposureSearchUrl(b) {
     case 'checkpeople':     return `https://checkpeople.com/search?firstName=${fn}&lastName=${ln}`;
     case 'familytreenow':   return `https://www.familytreenow.com/search/people/results?first=${fn}&last=${ln}&state=${st}`;
     // Fixed: use underscores throughout (peekyou format) instead of %20
-    case 'peekyou':         return `https://www.peekyou.com/${under(fnRaw)}_${under(lnRaw)}`;
+    case 'peekyou':         return null; // Site has SSL issues / is down — email method only
     case 'npd':             return `https://nationalpublicdata.com/search/?first=${fn}&last=${ln}&state=${st}`;
     // No searchable profile page
     case 'pipl':            return null;
     // Fixed: use + throughout instead of mixed + and %20
-    case 'zabasearch':      return `https://www.zabasearch.com/${plus(fnRaw)}+${plus(lnRaw)}/`;
+    case 'zabasearch':      return null; // Now owned by Intelius — opt-out goes through intelius.com/privacy-center
     // Suppression portal only
     case 'anywho':          return null;
     // Fixed: all-lowercase slug
