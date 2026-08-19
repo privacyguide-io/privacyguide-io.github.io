@@ -2558,7 +2558,7 @@ const OWNER_CODE    = 'CHERRYSUNDAE';   // YOUR secret owner code — never shar
 const PRICE_REGULAR = '$7';
 const PRICE_LAUNCH  = '$3.50';
 const GUMROAD_URL   = 'https://privacyguide.gumroad.com/l/rbcccr';
-const APP_VERSION   = '1.14';
+const APP_VERSION   = '1.15';
 
 function isLaunchActive() {
   return Date.now() < LAUNCH_START + LAUNCH_HOURS * 3600000;
@@ -3231,33 +3231,53 @@ function getOptOutUrl(b) {
 // EXPOSURE SCANNER — Find My Data
 // ═══════════════════════════════════════════════════════════
 function getExposureSearchUrl(b) {
-  const fn  = encodeURIComponent(U.fn  || '');
-  const ln  = encodeURIComponent(U.ln  || '');
-  const st  = encodeURIComponent((U.addresses?.[0]?.state || U.addresses?.[0]?.st || '').trim());
-  const fnRaw = (U.fn  || '').trim();
-  const lnRaw = (U.ln  || '').trim();
+  const fn     = encodeURIComponent(U.fn  || '');
+  const ln     = encodeURIComponent(U.ln  || '');
+  const st     = encodeURIComponent((U.addresses?.[0]?.state || U.addresses?.[0]?.st || '').trim());
+  const fnRaw  = (U.fn  || '').trim();
+  const lnRaw  = (U.ln  || '').trim();
+  const stRaw  = (U.addresses?.[0]?.state || U.addresses?.[0]?.st || '').trim();
+  const cityRaw= (U.addresses?.[0]?.city || '').trim();
+  // URL-slug helpers
+  const slug  = s => s.toLowerCase().replace(/\s+/g, '-');
+  const under = s => s.toLowerCase().replace(/\s+/g, '_');
+  const plus  = s => s.replace(/\s+/g, '+');
   switch (b.id) {
-    case 'spokeo':          return `https://www.spokeo.com/${fn}+${ln}`;
-    case 'whitepages':      return `https://www.whitepages.com/name/${fn}-${ln}`;
+    // Fixed: use search URL with ?q= instead of broken path format
+    case 'spokeo':          return `https://www.spokeo.com/search?q=${encodeURIComponent(fnRaw + ' ' + lnRaw)}&lstate=${stRaw}`;
+    // Fixed: all-lowercase slug so spaces in compound surnames become dashes
+    case 'whitepages':      return `https://www.whitepages.com/name/${slug(fnRaw)}-${slug(lnRaw)}`;
     case 'beenverified':    return `https://www.beenverified.com/app/optout/search?firstName=${fn}&lastName=${ln}&state=${st}`;
-    case 'intelius':        return `https://suppression.peopleconnect.us/login`;
-    case 'fastpeoplesearch':return `https://www.fastpeoplesearch.com/name/${fn}-${ln}_${st}`;
-    case 'radaris':         return `https://radaris.com/?q=${fn}+${ln}`;
+    // Suppression portal only — no name-search available; hide "Find Yourself First"
+    case 'intelius':        return null;
+    // Fixed: lowercase slug + city slug (e.g. iris-rodriguez-galvan_aurora-co)
+    case 'fastpeoplesearch':return `https://www.fastpeoplesearch.com/name/${slug(fnRaw)}-${slug(lnRaw)}_${slug(cityRaw)}-${stRaw.toLowerCase()}`;
+    // Fixed: use /p/FirstName/LastName/ path format instead of broken ?q=
+    case 'radaris':         return `https://radaris.com/p/${fnRaw}/${lnRaw.replace(/\s+/g, '-')}/`;
     case 'mylife':          return `https://www.mylife.com/people-search/name_results.pubview?searchterm=${fn}+${ln}`;
     case 'truthfinder':     return `https://www.truthfinder.com/people-search/?firstName=${fn}&lastName=${ln}&state=${st}`;
-    case 'instantcheckmate':return `https://suppression.peopleconnect.us/login`;
-    case 'peoplefinders':   return `https://www.peoplefinders.com/people/${fn}-${ln}`;
+    // Suppression portal only — no name-search available
+    case 'instantcheckmate':return null;
+    // Fixed: all-lowercase slug for path URLs
+    case 'peoplefinders':   return `https://www.peoplefinders.com/people/${slug(fnRaw)}-${slug(lnRaw)}`;
     case 'socialcatfish':   return `https://socialcatfish.com/search/?q=${fn}+${ln}`;
-    case 'checkpeople':     return `https://checkpeople.com/search?firstName=${fnRaw}&lastName=${lnRaw}`;
+    // Fixed: use encodeURIComponent instead of raw strings in query params
+    case 'checkpeople':     return `https://checkpeople.com/search?firstName=${fn}&lastName=${ln}`;
     case 'familytreenow':   return `https://www.familytreenow.com/search/people/results?first=${fn}&last=${ln}&state=${st}`;
-    case 'peekyou':         return `https://www.peekyou.com/${fn}_${ln}`;
+    // Fixed: use underscores throughout (peekyou format) instead of %20
+    case 'peekyou':         return `https://www.peekyou.com/${under(fnRaw)}_${under(lnRaw)}`;
     case 'npd':             return `https://nationalpublicdata.com/search/?first=${fn}&last=${ln}&state=${st}`;
-    case 'pipl':            return `https://pipl.com/`;
-    case 'zabasearch':      return `https://www.zabasearch.com/${fn}+${ln}/`;
-    case 'anywho':          return `https://suppression.peopleconnect.us/login`;
-    case 'usphonebook':     return `https://www.usphonebook.com/${fn}-${ln}/`;
+    // No searchable profile page
+    case 'pipl':            return null;
+    // Fixed: use + throughout instead of mixed + and %20
+    case 'zabasearch':      return `https://www.zabasearch.com/${plus(fnRaw)}+${plus(lnRaw)}/`;
+    // Suppression portal only
+    case 'anywho':          return null;
+    // Fixed: all-lowercase slug
+    case 'usphonebook':     return `https://www.usphonebook.com/${slug(fnRaw)}-${slug(lnRaw)}/`;
     case 'publicrecords360':return `https://www.publicrecords360.com/search/${fn}+${ln}`;
-    case 'unmask':          return `https://unmask.com/`;
+    // No searchable profile page
+    case 'unmask':          return null;
     default:                return b.url || '#';
   }
 }
