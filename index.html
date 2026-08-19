@@ -2321,12 +2321,12 @@ const BROKERS = [
     email:'support@radaris.com',
     desc:'A people-search engine that builds detailed profiles including your current and past addresses, neighbors, property records, and even photos scraped from social media. Commonly used by employers, landlords, and private investigators.',
     steps:[
-      {t:'Go to <a href="https://radaris.com" target="_blank"><strong>radaris.com</strong></a> and search your <strong>full name</strong>'},
-      {t:'Click your profile listing to open your full profile page'},
-      {t:'<strong>Copy the full URL</strong> from your browser\'s address bar — it will look like: radaris.com/p/Firstname-Lastname/XXXXXXX/'},
-      {t:'Send the opt-out email template below to <strong>support@radaris.com</strong>'},
-      {t:'In the email body, <strong>paste your profile URL</strong> — Radaris requires this to locate and process your request'},
-      {t:'Radaris typically removes listings within <strong>3–7 business days</strong> and sends a confirmation email when done'},
+      {t:'Go to <a href="https://radaris.com" target="_blank"><strong>radaris.com</strong></a> and search your <strong>full name + state</strong> (example: "Jane Smith Texas")'},
+      {t:'Click your profile listing — it should show your address and relatives. This opens your full profile page.'},
+      {t:'<strong>Copy the full URL</strong> from your browser\'s address bar — it will look like: <code>radaris.com/p/Jane-Smith/1234567/</code>. You need this exact URL in your email.'},
+      {t:'If you have <strong>multiple listings</strong>, copy all of them — you can paste multiple URLs in the email and Radaris will remove all of them at once'},
+      {t:'Use the email template below — paste your profile URL(s) where indicated — and send to <strong>support@radaris.com</strong>'},
+      {t:'Radaris removes listings within <strong>3–7 business days</strong> and emails you a confirmation. If you see no email after 7 days, check your spam folder.'},
     ],
     useEmail:true
   },
@@ -2335,12 +2335,12 @@ const BROKERS = [
     email:'privacy@mylife.com',
     desc:'MyLife assigns you a public "Reputation Score" based on your records and criminal history, and that score appears in Google search results when someone looks up your name. It\'s one of the most damaging sites to have a listing on.',
     steps:[
-      {t:'Send the opt-out email template below to <strong>privacy@mylife.com</strong>'},
-      {t:'Use the email template below — it already has your <strong>full name, addresses, and name variations from your profile</strong>. Confirm all your known variations are listed in the "Also Known As" line before sending.'},
-      {t:'The template cites your rights under <strong>CCPA and your state\'s privacy law</strong> — this is already written in for you'},
-      {t:'You may receive an auto-reply with a <strong>case number</strong> — save that number, you\'ll need it if you have to follow up'},
-      {t:'If no update after <strong>10 business days</strong>, reply to the auto-reply and reference your case number'},
-      {t:'MyLife can take up to <strong>2 weeks</strong> to fully process but is legally required to comply'},
+      {t:'Before emailing, go to <a href="https://www.mylife.com" target="_blank"><strong>mylife.com</strong></a> and search your name — note the exact URL of your profile page (you\'ll paste it in the email)'},
+      {t:'Use the email template below — it already includes your <strong>full name, address, and name variations</strong>. Review the "Also Known As" line and add any other names or maiden names you\'ve used.'},
+      {t:'The template cites your <strong>CCPA rights</strong> and demands removal within the legal 45-day window — do not edit or remove this language'},
+      {t:'Send the email to <strong>privacy@mylife.com</strong>. You\'ll receive an auto-reply with a <strong>case number</strong> — save it.'},
+      {t:'If no update after <strong>10 business days</strong>, reply to the auto-reply and reference your case number. You can also call 1-888-704-1900 to follow up.'},
+      {t:'MyLife can take up to <strong>2 weeks</strong> to fully remove your Reputation Score and profile, but is legally required to comply'},
     ],
     useEmail:true
   },
@@ -2349,11 +2349,11 @@ const BROKERS = [
     email:'privacy@truthfinder.com',
     desc:'TruthFinder sells background check reports to the public for a monthly fee. It packages your address history, criminal records (if any), relatives, and social media accounts into detailed reports anyone can purchase.',
     steps:[
-      {t:'Send the opt-out email template below to <strong>privacy@truthfinder.com</strong>'},
-      {t:'TruthFinder may reply asking you to verify your identity — if so, provide only your <strong>full name and date of birth</strong>'},
-      {t:'⚠️ <strong>Never provide your Social Security Number</strong> or financial information — no legitimate data broker needs these to remove you'},
-      {t:'Once your identity is confirmed, TruthFinder will process a suppression of all your records'},
-      {t:'Allow up to <strong>5 business days</strong> after verification for the removal to be completed'},
+      {t:'Send the opt-out email template below to <strong>privacy@truthfinder.com</strong> — your name and address are pre-filled in the template'},
+      {t:'TruthFinder will likely reply within 1–2 business days asking you to <strong>verify your identity</strong>. If so, reply with your <strong>full name and date of birth</strong> only.'},
+      {t:'⚠️ <strong>Never provide your Social Security Number, driver\'s license, or financial information</strong> — no legitimate data broker needs these to process a removal request'},
+      {t:'TruthFinder is owned by the same company as Instant Checkmate (PeopleConnect) — but their email opt-out is separate from the web suppression portal, so you need to do both'},
+      {t:'Once identity is confirmed, suppression completes within <strong>5 business days</strong>. You\'ll receive a final confirmation email.'},
     ],
     useEmail:true
   },
@@ -2389,10 +2389,12 @@ const BROKERS = [
     email:'NVOptOut@socialcatfish.com',
     desc:'SocialCatfish specializes in reverse lookups — people can find you by searching your phone number, email address, username, or even a photo. It\'s commonly used by people trying to track down individuals who have tried to stay private.',
     steps:[
-      {t:'Use the email template below — your <strong>name, name variations, and address are already pre-filled from your profile</strong>. Just copy and send.'},
-      {t:'The email uses Nevada\'s privacy law to invoke your removal rights — this is the correct legal channel for SocialCatfish'},
-      {t:'SocialCatfish can take up to <strong>30 days</strong> to complete removal — this is longer than most brokers'},
-      {t:'If you receive no confirmation after <strong>2 weeks</strong>, send a follow-up to the same email address'},
+      {t:'Before emailing, visit <a href="https://socialcatfish.com" target="_blank"><strong>socialcatfish.com</strong></a> and search your name or phone number to see what they have on you'},
+      {t:'Use the email template below — your <strong>name, name variations, and address are already pre-filled from your profile</strong>. Send it to <strong>NVOptOut@socialcatfish.com</strong> (this is the official Nevada privacy opt-out address)'},
+      {t:'The subject line should be: <strong>"Nevada Privacy Opt-Out Request"</strong> — the template already sets this correctly'},
+      {t:'The email invokes Nevada SB-220, which gives you the right to opt out regardless of which US state you live in — do not change this legal language'},
+      {t:'You\'ll receive an auto-reply confirming receipt. SocialCatfish can take up to <strong>30 days</strong> to complete removal — longer than most brokers.'},
+      {t:'If you receive no confirmation after <strong>2 weeks</strong>, reply to the auto-reply citing your original request date. They are legally required to respond.'},
     ],
     useEmail:true
   },
@@ -2439,12 +2441,13 @@ const BROKERS = [
     url:'https://nationalpublicdata.com/opt-out.html',
     desc:'National Public Data (nationalpublicdata.com) is currently a basic white-pages directory operating under new ownership — it is not affiliated with the 2024 SSN breach that made headlines. The old operators (Jerico Pictures, Inc.) shut down and abandoned the domain after that breach. The current site only contains publicly available info like names, addresses, and phone numbers — no Social Security numbers. Still worth opting out since it does list your contact info.',
     steps:[
-      {t:'Go to <a href="https://nationalpublicdata.com/opt-out.html" target="_blank"><strong>nationalpublicdata.com/opt-out.html</strong></a>'},
-      {t:'📌 Note: If you\'ve heard about the 2024 data breach involving Social Security numbers, that was the <em>previous</em> owner. The current site is under different management and does not store SSNs.'},
-      {t:'Enter your <strong>first name, last name, and state</strong> in the search box'},
-      {t:'Find your listing in the results — match it by address or age — then copy and paste the profile URL into the removal form'},
-      {t:'Click <strong>"Request Removal"</strong> and follow the on-screen steps to confirm'},
-      {t:'⚠️ If the site doesn\'t load, try again in 24 hours — it occasionally has outages.'},
+      {t:'📌 Note: The 2024 data breach involving Social Security numbers was caused by the <em>previous</em> owner (Jerico Pictures). The current site is under different management and does not store SSNs.'},
+      {t:'Go to <a href="https://nationalpublicdata.com/opt-out.html" target="_blank"><strong>nationalpublicdata.com/opt-out.html</strong></a> — you\'ll see a search form at the top of the page'},
+      {t:'Enter your <strong>first name, last name, and state</strong>, then click <strong>"Search"</strong>'},
+      {t:'Your listing will appear below the search box — click on it to open your profile page, then <strong>copy the URL</strong> from your browser\'s address bar'},
+      {t:'Scroll back down to the removal form and <strong>paste your profile URL</strong> into the input box, then click <strong>"Request Removal"</strong>'},
+      {t:'✅ You\'ll see a confirmation message on screen — no email required. Removal takes <strong>24–72 hours</strong>.'},
+      {t:'⚠️ If the site doesn\'t load, try again in 24 hours — it occasionally has brief outages.'},
     ]
   },
   {
@@ -2504,9 +2507,11 @@ const BROKERS = [
     email:'optout@publicrecords360.com',
     desc:'PublicRecords360 sells access to court records, property records, and personal background data aggregated from government databases. It resells this information to individuals and businesses without your knowledge.',
     steps:[
-      {t:'Use the email template below — your <strong>full name, address, and ZIP code are pre-filled</strong> from your profile. Just copy and send to <strong>optout@publicrecords360.com</strong>.'},
-      {t:'They process requests within <strong>7 business days</strong> and should send a confirmation email'},
-      {t:'If you receive no response within 10 business days, send a follow-up email to the same address citing your original request date'},
+      {t:'First, visit <a href="https://www.publicrecords360.com" target="_blank"><strong>publicrecords360.com</strong></a> and search your name to find your listing — note your profile URL from the address bar'},
+      {t:'Use the email template below — your <strong>full name, address, and ZIP code are pre-filled</strong>. Add your profile URL to the message body for faster processing. Send to <strong>optout@publicrecords360.com</strong>.'},
+      {t:'Include in the subject line: <strong>"CCPA Opt-Out Request – [Your Full Name]"</strong> — this routes it to their privacy team directly'},
+      {t:'They process requests within <strong>7 business days</strong> and will send a confirmation email when your record is removed'},
+      {t:'If no response within <strong>10 business days</strong>, send a follow-up email citing your original send date. The CCPA requires a response within 45 days.'},
     ],
     useEmail:true
   },
@@ -2550,7 +2555,7 @@ const OWNER_CODE    = 'CHERRYSUNDAE';   // YOUR secret owner code — never shar
 const PRICE_REGULAR = '$7';
 const PRICE_LAUNCH  = '$3.50';
 const GUMROAD_URL   = 'https://privacyguide.gumroad.com/l/rbcccr';
-const APP_VERSION   = '1.12';
+const APP_VERSION   = '1.13';
 
 function isLaunchActive() {
   return Date.now() < LAUNCH_START + LAUNCH_HOURS * 3600000;
