@@ -2441,11 +2441,11 @@ const BROKERS = [
   },
   {
     id:'npd', name:'National Public Data', icon:'🏛️', method:'form', diff:'Easy',
-    url:'https://nationalpublicdata.com/opt-out.html',
+    url:'https://nationalpublicdata.com/optout.html',
     desc:'National Public Data (nationalpublicdata.com) is currently a basic white-pages directory operating under new ownership — it is not affiliated with the 2024 SSN breach that made headlines. The old operators (Jerico Pictures, Inc.) shut down and abandoned the domain after that breach. The current site only contains publicly available info like names, addresses, and phone numbers — no Social Security numbers. Still worth opting out since it does list your contact info.',
     steps:[
       {t:'📌 Note: The 2024 data breach involving Social Security numbers was caused by the <em>previous</em> owner (Jerico Pictures). The current site is under different management and does not store SSNs.'},
-      {t:'Go to <a href="https://nationalpublicdata.com/opt-out.html" target="_blank"><strong>nationalpublicdata.com/opt-out.html</strong></a> — you\'ll see a search form at the top of the page'},
+      {t:'Go to <a href="https://nationalpublicdata.com/optout.html" target="_blank"><strong>nationalpublicdata.com/optout.html</strong></a> — you\'ll see a search form at the top of the page'},
       {t:'Enter your <strong>first name, last name, and state</strong>, then click <strong>"Search"</strong>'},
       {t:'Your listing will appear below the search box — click on it to open your profile page, then <strong>copy the URL</strong> from your browser\'s address bar'},
       {t:'Scroll back down to the removal form and <strong>paste your profile URL</strong> into the input box, then click <strong>"Request Removal"</strong>'},
@@ -2558,7 +2558,7 @@ const OWNER_CODE    = 'CHERRYSUNDAE';   // YOUR secret owner code — never shar
 const PRICE_REGULAR = '$7';
 const PRICE_LAUNCH  = '$3.50';
 const GUMROAD_URL   = 'https://privacyguide.gumroad.com/l/rbcccr';
-const APP_VERSION   = '1.20';
+const APP_VERSION   = '1.21';
 
 function isLaunchActive() {
   return Date.now() < LAUNCH_START + LAUNCH_HOURS * 3600000;
