@@ -2558,7 +2558,7 @@ const OWNER_CODE    = 'CHERRYSUNDAE';   // YOUR secret owner code — never shar
 const PRICE_REGULAR = '$7';
 const PRICE_LAUNCH  = '$3.50';
 const GUMROAD_URL   = 'https://privacyguide.gumroad.com/l/rbcccr';
-const APP_VERSION   = '1.21';
+const APP_VERSION   = '1.22';
 
 function isLaunchActive() {
   return Date.now() < LAUNCH_START + LAUNCH_HOURS * 3600000;
@@ -3340,7 +3340,7 @@ function renderExposureScan() {
             ${b.note ? `<div style="font-size:10px;color:var(--muted);margin-top:1px;">${b.note}</div>` : ''}
           </div>
         </div>
-        <a href="${url}" target="_blank" rel="noopener" style="font-size:11px;color:var(--teal-l);text-decoration:none;background:rgba(20,184,166,0.1);border:1px solid rgba(20,184,166,0.3);padding:6px 11px;border-radius:8px;white-space:nowrap;font-weight:700;">Open &amp; Check →</a>
+        <a href="${url || b.url}" target="_blank" rel="noopener" style="font-size:11px;color:var(--teal-l);text-decoration:none;background:rgba(20,184,166,0.1);border:1px solid rgba(20,184,166,0.3);padding:6px 11px;border-radius:8px;white-space:nowrap;font-weight:700;">${url ? 'Open &amp; Check →' : 'Visit Site →'}</a>
       </div>
       <div style="display:flex;gap:6px;">
         <button onclick="setExposure('${b.id}','found')" title="${iFound?'Tap to unmark':'Mark as found on this site'}" style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid ${iFound?'#f87171':'rgba(255,255,255,0.1)'};background:${iFound?'rgba(239,68,68,0.15)':'rgba(255,255,255,0.03)'};color:${iFound?'#f87171':'var(--muted)'};font-size:11.5px;font-weight:700;cursor:pointer;">${iFound?'🔴 Found ✕':'🔴 Found Me'}</button>
