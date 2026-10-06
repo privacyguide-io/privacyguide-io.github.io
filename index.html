@@ -484,6 +484,15 @@
     .code-divider { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
     .code-divider-line { flex: 1; height: 1px; background: var(--border); }
     .code-divider-txt { color: var(--muted); font-size: 12px; white-space: nowrap; }
+
+    /* ── STICKY BUY BAR ────────────────────────────────── */
+    .sticky-buy {
+      position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 430px; padding: 10px 24px 30px;
+      background: linear-gradient(to top, #070D16 68%, transparent);
+      z-index: 990; opacity: 0; pointer-events: none; transition: opacity .3s;
+    }
+    .sticky-buy.show { opacity: 1; pointer-events: auto; }
   </style>
 </head>
 <body>
@@ -514,7 +523,12 @@
     <div class="welcome-stats" style="margin-top:22px;">
       <div class="stat-box"><div class="stat-num">33</div><div class="stat-lbl">Brokers We Remove</div></div>
       <div class="stat-box"><div class="stat-num">$47</div><div class="stat-lbl">One-Time · No Renewal</div></div>
-      <div class="stat-box"><div class="stat-num" style="font-size:14px;">2–4<br>wks</div><div class="stat-lbl">Typical Results</div></div>
+      <div class="stat-box"><div class="stat-num">~3 wk</div><div class="stat-lbl">Avg. Timeline</div></div>
+    </div>
+    <div style="width:100%;margin-top:22px;">
+      <a href="https://privacyguide.gumroad.com/l/rbcccr" target="_blank" class="btn btn-primary" style="display:block;text-align:center;text-decoration:none;">Get Started — $47 →</a>
+      <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:7px;">Secure checkout via Gumroad · No subscription</p>
+      <a href="#" onclick="openDFYForm();return false;" style="display:block;text-align:center;font-size:13px;color:var(--teal-l);text-decoration:none;font-weight:600;margin-top:12px;">Already purchased? Fill out your intake form →</a>
     </div>
   </div>
 
@@ -4289,8 +4303,26 @@ function openDFYForm() {
   const wrap = document.getElementById('dfy-form-wrap');
   if (!wrap) return;
   wrap.classList.add('open');
+  // Hide sticky bar while form is open
+  const sb = document.getElementById('sticky-buy');
+  if (sb) sb.classList.remove('show');
   setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
 }
+
+// ── STICKY BUY BAR ────────────────────────────────────────────────────────────
+(function() {
+  const hero = document.querySelector('.welcome-hero');
+  const bar  = document.getElementById('sticky-buy');
+  const welcome = document.getElementById('welcome');
+  if (!hero || !bar) return;
+  function updateBar() {
+    const onWelcome = welcome && welcome.classList.contains('active');
+    const formOpen  = document.getElementById('dfy-form-wrap') && document.getElementById('dfy-form-wrap').classList.contains('open');
+    const pastHero  = hero.getBoundingClientRect().bottom < 80;
+    bar.classList.toggle('show', onWelcome && pastHero && !formOpen);
+  }
+  window.addEventListener('scroll', updateBar, { passive: true });
+})();
 
 function closeDFYForm() {
   const wrap = document.getElementById('dfy-form-wrap');
@@ -4467,5 +4499,10 @@ function redeemCodeFromWelcome() {
   ]
 }
 </script>
+
+<!-- Sticky buy bar (welcome screen only) -->
+<div class="sticky-buy" id="sticky-buy">
+  <a href="https://privacyguide.gumroad.com/l/rbcccr" target="_blank" class="btn btn-primary" style="display:block;text-align:center;text-decoration:none;">Get Started — $47 →</a>
+</div>
 </body>
 </html>
