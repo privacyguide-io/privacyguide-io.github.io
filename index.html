@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>PrivacyGuide — Remove Your Data</title>
-  <!-- v4.4 — 2026-10-06 -->
+  <!-- v4.5 — 2026-10-06 -->
   <style>
     :root {
       --bg: #070D16;
@@ -536,7 +536,7 @@
       <div style="display:flex;align-items:flex-start;gap:14px;padding-bottom:16px;position:relative;">
         <div style="position:absolute;left:17px;top:38px;bottom:0;width:2px;background:rgba(13,122,138,0.2);"></div>
         <div style="width:34px;height:34px;border-radius:50%;background:var(--teal-dim);border:1.5px solid rgba(13,122,138,0.5);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--teal-l);flex-shrink:0;">2</div>
-        <div style="padding-top:7px;"><div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:3px;">Fill out the intake form</div><div style="font-size:12px;color:var(--dim);line-height:1.55;">After purchase, complete our short form — your name, address, and date of birth. Takes about 2 minutes. <a href="https://docs.google.com/forms/d/e/1FAIpQLSd2nZ1NyxO258ffQ6Hb2PBin6Kq5OKPFQgXGl3M7rUAJ0iHkA/viewform" target="_blank" style="color:var(--teal-l);text-decoration:none;">Fill it out here →</a></div></div>
+        <div style="padding-top:7px;"><div style="font-size:14px;font-weight:700;color:var(--white);margin-bottom:3px;">Fill out the intake form</div><div style="font-size:12px;color:var(--dim);line-height:1.55;">After purchase, click "Already purchased?" below and fill out the short form — your name, address, and date of birth. Takes about 2 minutes.</div></div>
       </div>
       <div style="display:flex;align-items:flex-start;gap:14px;">
         <div style="width:34px;height:34px;border-radius:50%;background:var(--teal-dim);border:1.5px solid rgba(13,122,138,0.5);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--teal-l);flex-shrink:0;">3</div>
@@ -583,7 +583,7 @@
       <a href="https://privacyguide.gumroad.com/l/rbcccr" target="_blank" class="btn btn-primary" style="display:block;text-align:center;text-decoration:none;margin-top:16px;font-size:15px;padding:14px;">Get Started — $47 →</a>
       <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:8px;">Secure checkout via Gumroad · Removals start within 24 hours</p>
       <div style="text-align:center;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.07);">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd2nZ1NyxO258ffQ6Hb2PBin6Kq5OKPFQgXGl3M7rUAJ0iHkA/viewform" target="_blank" style="font-size:13px;color:var(--teal-l);text-decoration:none;font-weight:600;">Already purchased? Fill out your intake form →</a>
+        <a href="#" onclick="openDFYForm();return false;" style="font-size:13px;color:var(--teal-l);text-decoration:none;font-weight:600;">Already purchased? Fill out your intake form →</a>
       </div>
     </div>
   </div>
@@ -4347,16 +4347,28 @@ function submitDFYForm() {
   const subject = encodeURIComponent('PrivacyGuide Done-For-You Request — ' + fullName);
   const body    = encodeURIComponent(bodyLines);
 
-  // Open mailto
-  window.location.href = 'mailto:support.privacyguide@gmail.com?subject=' + subject + '&body=' + body;
+  // Silently POST to Google Forms (behind the scenes — client never sees it)
+  const GF_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSd2nZ1NyxO258ffQ6Hb2PBin6Kq5OKPFQgXGl3M7rUAJ0iHkA/formResponse';
+  const gfData = new FormData();
+  gfData.append('entry.551677282',  fname.trim());
+  gfData.append('entry.1966926244', lname.trim());
+  gfData.append('entry.791999548',  mname.trim());
+  gfData.append('entry.1477807490', email.trim());
+  gfData.append('entry.851434838',  address.trim());
+  gfData.append('entry.1802229256', city.trim());
+  gfData.append('entry.1437768542', state.trim().toUpperCase());
+  gfData.append('entry.255779185',  zip.trim());
+  gfData.append('entry.1269737175', dob.trim());
+  gfData.append('entry.1848899078', phone.trim());
+  gfData.append('entry.1229480881', past.trim());
+  gfData.append('entry.1902195269', aliases.trim());
+  fetch(GF_URL, { method: 'POST', mode: 'no-cors', body: gfData }).catch(() => {});
 
-  // Show success after brief delay (gives mail client time to open)
-  setTimeout(() => {
-    const fields  = document.getElementById('dfy-form-fields');
-    const success = document.getElementById('dfy-success');
-    if (fields)  fields.style.display  = 'none';
-    if (success) success.classList.add('show');
-  }, 1200);
+  // Show success immediately
+  const fields  = document.getElementById('dfy-form-fields');
+  const success = document.getElementById('dfy-success');
+  if (fields)  fields.style.display  = 'none';
+  if (success) success.classList.add('show');
 }
 
 // ── v4.0 LANDING — Welcome screen code entry ──────────────────────────────────
