@@ -796,9 +796,9 @@ button:active { transform: scale(.97); }
     <div id="post-purchase-msg" style="display:none;margin-top:28px;background:rgba(13,122,138,.15);border:1px solid rgba(13,122,138,.4);border-radius:14px;padding:24px 28px;">
       <div style="font-size:28px;margin-bottom:8px;">🎉</div>
       <h3 style="margin:0 0 10px;color:var(--teal-l);">Purchase Complete — Welcome to PrivacyGuide!</h3>
-      <p style="color:var(--muted);font-size:14px;margin:0 0 16px;">Check your email for a confirmation from Gumroad. Then enter that same email below to fill out your one-time information form and start your removals.</p>
-      <button class="btn-primary" style="font-size:15px;padding:13px 28px;" onclick="document.getElementById('purchase-email-gate').focus();document.querySelector('.returning-bar').scrollIntoView({behavior:'smooth'})">
-        Enter My Email & Get Started ↓
+      <p style="color:var(--muted);font-size:14px;margin:0 0 16px;">Check your email for a Gumroad receipt — it contains your <strong style="color:var(--text);">License Key</strong>. Enter it below to access your intake form and start your removals.</p>
+      <button class="btn-primary" style="font-size:15px;padding:13px 28px;" onclick="document.getElementById('purchase-license-key').focus();document.querySelector('.returning-bar').scrollIntoView({behavior:'smooth'})">
+        Enter My License Key & Get Started ↓
       </button>
     </div>
   </div>
@@ -808,12 +808,12 @@ button:active { transform: scale(.97); }
     <div class="returning-inner">
       <div class="returning-block">
         <h3>✅ Already Purchased?</h3>
-        <p>Enter the email address from your Gumroad receipt to access the intake form.</p>
+        <p>Enter your Gumroad license key to access the intake form. Find it in your Gumroad receipt email.</p>
         <div class="code-input-row" style="margin-top:8px;">
-          <input type="email" id="purchase-email-gate" placeholder="your@email.com" style="flex:1;" onkeydown="if(event.key==='Enter')verifyPurchaseGate()" />
-          <button class="btn-primary btn-sm" onclick="verifyPurchaseGate()">Continue →</button>
+          <input type="text" id="purchase-license-key" placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX" style="flex:1;text-transform:uppercase;letter-spacing:.5px;font-size:12px;" onkeydown="if(event.key==='Enter')verifyLicenseKey()" />
+          <button class="btn-primary btn-sm" onclick="verifyLicenseKey()">Continue →</button>
         </div>
-        <p style="font-size:12px;color:var(--muted);margin-top:8px;">This must match the email used at Gumroad checkout.</p>
+        <p style="font-size:12px;color:var(--muted);margin-top:8px;">Your license key is in your Gumroad receipt email — 4 groups of 8 characters.</p>
       </div>
       <div class="returning-block">
         <h3>🔑 Have Your Access Code?</h3>
@@ -942,11 +942,13 @@ button:active { transform: scale(.97); }
       <!-- Purchase verification -->
       <div class="form-section-title">Purchase Verification</div>
       <div class="intake-notice" style="margin-bottom:14px;">
-        Enter the email address you used when you purchased on Gumroad. This is how we verify your order. Not sure? Check your Gumroad receipt email.
+        Enter your Gumroad license key — it's in your Gumroad receipt email, under "License Key." This is how we verify your order.
       </div>
       <div class="field">
-        <label>Email Used at Checkout *</label>
-        <input type="email" id="i-purchase-email" placeholder="Email from your Gumroad receipt" required />
+        <label>Gumroad License Key *</label>
+        <input type="text" id="i-license-key" placeholder="XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX" style="text-transform:uppercase;letter-spacing:.5px;font-size:13px;" required
+          oninput="this.value=this.value.toUpperCase()" />
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;">4 groups of 8 characters, separated by dashes. Found in your Gumroad receipt email.</div>
       </div>
 
       <div class="intake-footer">
@@ -1115,6 +1117,7 @@ button:active { transform: scale(.97); }
         <div class="admin-tab active" onclick="switchAdminTab('clients', this)">👥 Clients</div>
         <div class="admin-tab" onclick="switchAdminTab('health', this)">🏥 Broker Health</div>
         <div class="admin-tab" onclick="switchAdminTab('emails', this)">📧 Email Log</div>
+        <div class="admin-tab" onclick="switchAdminTab('roadmap', this)">📋 Roadmap</div>
       </div>
 
       <!-- Clients Tab -->
@@ -1158,6 +1161,112 @@ button:active { transform: scale(.97); }
           <div style="text-align:center;padding:30px;color:var(--muted);">Loading email log…</div>
         </div>
       </div>
+
+      <!-- Roadmap Tab -->
+      <div class="admin-tab-content" id="atab-roadmap" style="padding:24px 0;">
+        <div style="max-width:700px;">
+          <h2 style="color:var(--teal-l);margin:0 0 6px;">Build Roadmap</h2>
+          <p style="color:var(--muted);font-size:13px;margin:0 0 28px;">The 5-step plan to make PrivacyGuide fully operational — and the questions you need to answer for each step.</p>
+
+          <!-- Step 1 -->
+          <div style="background:rgba(13,122,138,.1);border:1px solid rgba(13,122,138,.3);border-radius:12px;padding:20px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <div style="background:var(--teal);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">1</div>
+              <h3 style="margin:0;color:var(--text);font-size:15px;">Fix the Welcome Screen Lobby — use Gumroad key as the gate</h3>
+              <span style="margin-left:auto;background:rgba(30,200,100,.15);color:#30c870;border:1px solid rgba(30,200,100,.3);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap;">✅ DONE</span>
+            </div>
+            <p style="color:var(--muted);font-size:13px;margin:0 0 10px;">Replace the email gate with Gumroad license key validation so only paying customers can reach the intake form.</p>
+            <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:14px;">
+              <div style="font-size:11px;color:var(--teal-l);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Questions answered:</div>
+              <ul style="margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.8;">
+                <li>What format is the Gumroad license key? → <strong style="color:var(--text);">XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX (4×8 hex chars)</strong></li>
+                <li>Should validation be strict or trust-based? → <strong style="color:var(--text);">Format-strict (regex) — exact match required</strong></li>
+                <li>Where does the client find their key? → <strong style="color:var(--text);">Gumroad receipt email under "License Key"</strong></li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <div style="background:var(--bg2);border:1px solid var(--border);color:var(--muted);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">2</div>
+              <h3 style="margin:0;color:var(--text);font-size:15px;">Build the Google Sheets Database</h3>
+              <span style="margin-left:auto;background:rgba(255,200,50,.1);color:#f0b840;border:1px solid rgba(255,200,50,.25);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;white-space:nowrap;">⏳ NEXT</span>
+            </div>
+            <p style="color:var(--muted);font-size:13px;margin:0 0 10px;">Create a Google Sheet with 5 tabs: Clients, Progress, Email_Log, Broker_Health, Owner_Stats. This is your live database.</p>
+            <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:14px;">
+              <div style="font-size:11px;color:#f0b840;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Questions you need to answer:</div>
+              <ul style="margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.8;">
+                <li>Which Google account should own this Sheet? (the one you check daily)</li>
+                <li>Do you want one Sheet per year, or one master Sheet forever?</li>
+                <li>What fields do you need for each client? (Name, Email, License Key, PG Code, Start Date, Expiry Date, Status…)</li>
+                <li>How do you want progress tracked — per broker (33 rows), or just a total %?</li>
+                <li>Do you want email log rows automatically added when you send a removal email, or manual entry only?</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <div style="background:var(--bg2);border:1px solid var(--border);color:var(--muted);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">3</div>
+              <h3 style="margin:0;color:var(--text);font-size:15px;">Build the Google Apps Script API</h3>
+            </div>
+            <p style="color:var(--muted);font-size:13px;margin:0 0 10px;">A small web app deployed from Apps Script that the portal can call to read/write data. Replaces <code style="background:rgba(255,255,255,.06);padding:1px 5px;border-radius:4px;">PLACEHOLDER_APPS_SCRIPT_URL</code>.</p>
+            <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:14px;">
+              <div style="font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Questions you need to answer:</div>
+              <ul style="margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.8;">
+                <li>Should the API require a secret key header for security, or is "anyone with the URL" OK?</li>
+                <li>What actions does the portal need? (Read progress by PG code, Submit new client from intake, Update broker status…)</li>
+                <li>Do you want the intake form to auto-create the Sheets row, or do you manually add clients?</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <div style="background:var(--bg2);border:1px solid var(--border);color:var(--muted);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">4</div>
+              <h3 style="margin:0;color:var(--text);font-size:15px;">Wire the Portal to Read Live Progress from Sheets</h3>
+            </div>
+            <p style="color:var(--muted);font-size:13px;margin:0 0 10px;">Replace demo mode in the client portal with real data from the Apps Script API. The progress ring, broker table, and status pills will show live numbers.</p>
+            <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:14px;">
+              <div style="font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Questions you need to answer:</div>
+              <ul style="margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.8;">
+                <li>What do you want clients to see? (Just the % ring, or also a list of which brokers are done/in-progress?)</li>
+                <li>Do you want a "last updated" timestamp shown in the portal?</li>
+                <li>If a client's code isn't found in the Sheet, should they see a "not found" error or a "processing" holding screen?</li>
+                <li>How often should the portal auto-refresh? (On load only, or every 30 seconds while they're watching?)</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+              <div style="background:var(--bg2);border:1px solid var(--border);color:var(--muted);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">5</div>
+              <h3 style="margin:0;color:var(--text);font-size:15px;">Build the Live Admin View</h3>
+            </div>
+            <p style="color:var(--muted);font-size:13px;margin:0 0 10px;">Replace the demo admin dashboard with real data from the same Sheets. You'll be able to see every client, their progress, and manually update broker statuses.</p>
+            <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:14px;">
+              <div style="font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Questions you need to answer:</div>
+              <ul style="margin:0;padding-left:18px;color:var(--muted);font-size:13px;line-height:1.8;">
+                <li>Do you want to be able to update broker status (done/in-progress/pending) from this screen?</li>
+                <li>Do you want to be able to manually generate a PG access code from here and send it to the client?</li>
+                <li>Should the admin show the client's Gumroad license key, or hide it for privacy?</li>
+                <li>Do you want revenue calculations (total clients × $47) visible here?</li>
+                <li>Do you want email-the-client buttons on each row, or email management stays outside this portal?</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="background:rgba(13,122,138,.08);border:1px solid rgba(13,122,138,.2);border-radius:10px;padding:16px;margin-top:24px;">
+            <div style="font-size:13px;color:var(--teal-l);font-weight:600;margin-bottom:6px;">💡 How to use this roadmap</div>
+            <p style="color:var(--muted);font-size:13px;margin:0;">Answer the questions above for Steps 2–5, then bring those answers back to Claude — it will build each step exactly to your spec. Start with Step 2 and work your way down in order; each step depends on the one before it.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1225,19 +1334,18 @@ function goToIntake() {
   showScreen('intake');
 }
 
-function verifyPurchaseGate() {
-  const email = (document.getElementById('purchase-email-gate')?.value || '').trim();
-  if (!email || !email.includes('@')) {
-    showToast('Please enter the email address you used at Gumroad checkout.');
+function verifyLicenseKey() {
+  const raw = (document.getElementById('purchase-license-key')?.value || '').trim().toUpperCase();
+  const pattern = /^[0-9A-F]{8}-[0-9A-F]{8}-[0-9A-F]{8}-[0-9A-F]{8}$/;
+  if (!pattern.test(raw)) {
+    showToast('Please enter your Gumroad license key from your receipt email. It looks like: XXXXXXXX-XXXXXXXX-XXXXXXXX-XXXXXXXX');
     return;
   }
-  // In demo mode or live mode: accept the email and proceed to intake
-  // (live verification against Gumroad/sheet happens when they submit the full form)
-  localStorage.setItem('pg_gumroad_email', email);
+  localStorage.setItem('pg_gumroad_license', raw);
   showScreen('intake');
-  // Pre-fill the purchase email in the intake form if the field exists
-  const intakeEmail = document.getElementById('i-purchase-email');
-  if (intakeEmail) intakeEmail.value = email;
+  // Pre-fill the license key in the intake form
+  const licenseField = document.getElementById('i-license-key');
+  if (licenseField) licenseField.value = raw;
 }
 
 function showAdminLogin() {
@@ -1320,7 +1428,7 @@ async function submitIntake(e) {
     city:   document.getElementById('i-city').value.trim(),
     state:  document.getElementById('i-state').value.trim().toUpperCase(),
     zip:    document.getElementById('i-zip').value.trim(),
-    order:  document.getElementById('i-purchase-email').value.trim(),
+    license: document.getElementById('i-license-key').value.trim().toUpperCase(),
     aliases, pastAddresses,
     ts: new Date().toISOString(),
   };
@@ -1833,15 +1941,20 @@ window.addEventListener('message', function(e) {
         // Payment confirmed — show the post-purchase success block
         const msg = document.getElementById('post-purchase-msg');
         if (msg) msg.style.display = 'block';
-        // Pre-fill the email gate if Gumroad gave us the buyer's email
+        // Store buyer email for intake form pre-fill (not used as gate)
         const buyerEmail = data.email || data.buyer_email || '';
         if (buyerEmail) {
-          const gate = document.getElementById('purchase-email-gate');
-          if (gate) gate.value = buyerEmail;
           localStorage.setItem('pg_gumroad_email', buyerEmail);
         }
-        msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        showToast('🎉 Payment confirmed! Check your email then scroll down to get started.');
+        // Focus the license key field so client can enter it immediately
+        const licenseField = document.getElementById('purchase-license-key');
+        if (licenseField) {
+          document.querySelector('.returning-bar')?.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => licenseField.focus(), 600);
+        } else {
+          msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        showToast('🎉 Payment confirmed! Check your Gumroad receipt email for your license key.');
       }
     } catch(err) {}
   }
@@ -1872,11 +1985,11 @@ window.addEventListener('message', function(e) {
     document.getElementById('existing-code').value = savedCode;
   }
 
-  // Pre-fill purchase email in intake form if we have it from the gate
-  const savedGumroadEmail = localStorage.getItem('pg_gumroad_email');
-  if (savedGumroadEmail) {
-    const pField = document.getElementById('i-purchase-email');
-    if (pField) pField.value = savedGumroadEmail;
+  // Pre-fill license key in intake form if we have it from the gate
+  const savedLicense = localStorage.getItem('pg_gumroad_license');
+  if (savedLicense) {
+    const licField = document.getElementById('i-license-key');
+    if (licField) licField.value = savedLicense;
   }
 
   // Populate broker pills on welcome screen
